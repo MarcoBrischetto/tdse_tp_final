@@ -62,31 +62,31 @@ extern "C" {
  */
 
 /* Events to excite Task normal */
-typedef enum task_normal_ev {EV_SYS_XX_IDLE,
-							 EV_SYS_XX_ACTIVE,
-							 EV_SYS_01_SENSOR_MAGNETICO_ACTIVO,
-							 EV_SYS_01_SENSOR_MAGNETICO_NO_ACTIVO,
-							 EV_SYS_01_BTN_UP,
-							 EV_SYS_01_BTN_DOWN,
-							 EV_SYS_01_SENSOR_TICKET_ACTIVO,
-							 EV_SYS_01_SENSOR_TICKET_NO_ACTIVO,
-							 EV_SYS_01_FINAL_CARRERA_SUPERIOR,
-							 EV_SYS_01_FINAL_CARRERA_INFERIOR,
-							 EV_SYS_01_SENSOR_LASER_ACTIVO,
-							 EV_SYS_01_SENSOR_LASER_NO_ACTIVO
+typedef enum task_normal_ev {
+							EV_SYS_XX_IDLE,
+							EV_SYS_01_BTN_INGRESO_DOWN,
+							EV_SYS_01_BTN_EGRESO_DOWN,
+							EV_SYS_01_PUERTA_EGRESO_ABIERTA,
+							EV_SYS_01_PUERTA_EGRESO_CERRADA,
+							EV_SYS_01_PUERTA_INGRESO_ABIERTA,
+							EV_SYS_01_PUERTA_INGRESO_CERRADA,
+							EV_SYS_01_BARRERA_ACTIVA,
+							EV_SYS_01_BARRERA_INACTIVA
 } task_normal_ev_t;
 
 
+
 /* State of Task normal */
-typedef enum task_normal_st {ST_SYS_XX_IDLE,
-							 ST_SYS_XX_ACTIVE,
-							 ST_SYS_01_AUTOAUSENTE,
-							 ST_SYS_01_AUTOPRESENTE,
-							 ST_SYS_01_RETIRAR_TICKET,
-							 ST_SYS_01_BARRERA_SUBIENDO,
-							 ST_SYS_01_BARRERA_ARRIBA,
-							 ST_SYS_01_AUTO_BARRERA,
-							 ST_SYS_01_BARRERA_BAJANDO
+typedef enum task_normal_st {
+							ST_SYS_01_ESPERAR_INGRESO,
+							ST_SYS_01_ABRIENDO_INGRESO,
+							ST_SYS_01_ESPERANDO_INGRESO,
+							ST_SYS_01_CERRANDO_INGRESO,
+							ST_SYS_01_PERSONA_ADENTRO,
+							ST_SYS_01_TIEMPO_EXCEDIDO,
+							ST_SYS_01_ABRIENDO_EGRESO,
+							ST_SYS_01_ESPERANDO_EGRESO,
+							ST_SYS_01_CERRANDO_EGRESO
 } task_normal_st_t;
 
 typedef struct

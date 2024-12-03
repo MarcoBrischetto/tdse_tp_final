@@ -6,6 +6,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../app/src/app.c \
+../app/src/configuracion.c \
 ../app/src/display.c \
 ../app/src/logger.c \
 ../app/src/task_actuator.c \
@@ -18,6 +19,7 @@ C_SRCS += \
 
 OBJS += \
 ./app/src/app.o \
+./app/src/configuracion.o \
 ./app/src/display.o \
 ./app/src/logger.o \
 ./app/src/task_actuator.o \
@@ -30,6 +32,7 @@ OBJS += \
 
 C_DEPS += \
 ./app/src/app.d \
+./app/src/configuracion.d \
 ./app/src/display.d \
 ./app/src/logger.d \
 ./app/src/task_actuator.d \
@@ -48,7 +51,7 @@ app/src/%.o app/src/%.su app/src/%.cyclo: ../app/src/%.c app/src/subdir.mk
 clean: clean-app-2f-src
 
 clean-app-2f-src:
-	-$(RM) ./app/src/app.cyclo ./app/src/app.d ./app/src/app.o ./app/src/app.su ./app/src/display.cyclo ./app/src/display.d ./app/src/display.o ./app/src/display.su ./app/src/logger.cyclo ./app/src/logger.d ./app/src/logger.o ./app/src/logger.su ./app/src/task_actuator.cyclo ./app/src/task_actuator.d ./app/src/task_actuator.o ./app/src/task_actuator.su ./app/src/task_actuator_interface.cyclo ./app/src/task_actuator_interface.d ./app/src/task_actuator_interface.o ./app/src/task_actuator_interface.su ./app/src/task_normal.cyclo ./app/src/task_normal.d ./app/src/task_normal.o ./app/src/task_normal.su ./app/src/task_normal_interface.cyclo ./app/src/task_normal_interface.d ./app/src/task_normal_interface.o ./app/src/task_normal_interface.su ./app/src/task_sensor.cyclo ./app/src/task_sensor.d ./app/src/task_sensor.o ./app/src/task_sensor.su ./app/src/task_set_up.cyclo ./app/src/task_set_up.d ./app/src/task_set_up.o ./app/src/task_set_up.su ./app/src/task_set_up_interface.cyclo ./app/src/task_set_up_interface.d ./app/src/task_set_up_interface.o ./app/src/task_set_up_interface.su
+	-$(RM) ./app/src/app.cyclo ./app/src/app.d ./app/src/app.o ./app/src/app.su ./app/src/configuracion.cyclo ./app/src/configuracion.d ./app/src/configuracion.o ./app/src/configuracion.su ./app/src/display.cyclo ./app/src/display.d ./app/src/display.o ./app/src/display.su ./app/src/logger.cyclo ./app/src/logger.d ./app/src/logger.o ./app/src/logger.su ./app/src/task_actuator.cyclo ./app/src/task_actuator.d ./app/src/task_actuator.o ./app/src/task_actuator.su ./app/src/task_actuator_interface.cyclo ./app/src/task_actuator_interface.d ./app/src/task_actuator_interface.o ./app/src/task_actuator_interface.su ./app/src/task_normal.cyclo ./app/src/task_normal.d ./app/src/task_normal.o ./app/src/task_normal.su ./app/src/task_normal_interface.cyclo ./app/src/task_normal_interface.d ./app/src/task_normal_interface.o ./app/src/task_normal_interface.su ./app/src/task_sensor.cyclo ./app/src/task_sensor.d ./app/src/task_sensor.o ./app/src/task_sensor.su ./app/src/task_set_up.cyclo ./app/src/task_set_up.d ./app/src/task_set_up.o ./app/src/task_set_up.su ./app/src/task_set_up_interface.cyclo ./app/src/task_set_up_interface.d ./app/src/task_set_up_interface.o ./app/src/task_set_up_interface.su
 
 .PHONY: clean-app-2f-src
 

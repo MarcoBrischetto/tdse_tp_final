@@ -95,17 +95,24 @@ typedef enum task_sensor_st {ST_BTN_XX_UP,
 typedef enum task_sensor_id {ID_BTN_MEN,
 							 ID_BTN_ENT,
 							 ID_BTN_NEX,
-							 ID_BTN_ESC} task_sensor_id_t;
+							 ID_BTN_ESC,
+							 ID_BTN_INGRESO,
+							 ID_BTN_EGRESO,
+							 ID_SENSOR_PUERTA_INGRESO,
+							 ID_SENSOR_PUERTA_EGRESO,
+							 ID_BARRERA
+} task_sensor_id_t;
 
 typedef struct
 {
-	task_sensor_id_t	identifier;
-	GPIO_TypeDef *		gpio_port;
-	uint16_t			pin;
-	GPIO_PinState		pressed;
-	uint32_t			tick_max;
-	task_sensor_ev_t	signal_up;
-	task_sensor_ev_t	signal_down;
+	task_sensor_id_t		identifier;
+	GPIO_TypeDef *			gpio_port;
+	uint16_t				pin;
+	GPIO_PinState			pressed;
+	uint32_t				tick_max;
+	task_sensor_ev_t		signal_up;
+	task_sensor_ev_t		signal_down;
+	void (*f_put_event)(uint32_t event);
 } task_sensor_cfg_t;
 
 typedef struct

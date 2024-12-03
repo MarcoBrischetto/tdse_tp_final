@@ -60,9 +60,12 @@
 #define DEL_SYS_XX_MED				50ul
 #define DEL_SYS_XX_MAX				500ul
 
+#define DEL_SYS_01_ESPERA			5000ul
+#define DEL_SYS_01_PERMANENCIA		10000ul
+
 /********************** internal data declaration ****************************/
 task_normal_dta_t task_normal_dta =
-	{DEL_SYS_XX_MIN, ST_SYS_01_AUTOAUSENTE, EV_SYS_XX_IDLE, false};
+	{DEL_SYS_XX_MIN, ST_SYS_01_ESPERAR_INGRESO, EV_SYS_XX_IDLE, false};
 
 #define normal_DTA_QTY	(sizeof(task_normal_dta)/sizeof(task_normal_dta_t))
 
@@ -154,6 +157,89 @@ void task_normal_update(void *parameters)
 
 		switch (p_task_normal_dta->state)
 		{
+
+		case ST_SYS_01_ESPERAR_INGRESO:
+
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_BTN_INGRESO_DOWN ==  p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_ABRIR);
+				p_task_normal_dta->state = ST_SYS_01_ABRIENDO_INGRESO;
+
+			}
+
+			break;
+
+
+		case ST_SYS_01_ABRIENDO_INGRESO:
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_PUERTA_INGRESO_ABIERTA ==  p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+
+				p_task_normal_dta->tick = DEL_SYS_01_ESPERA;
+				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_ABRIR);
+				put_event_task_actuator(EV_LED_XX_ON, ID_SEMAFORO_INGRESO);
+
+				p_task_normal_dta->state = ST_SYS_01_ESPERANDO_INGRESO;
+
+			}
+			break;
+
+		case ST_SYS_01_ESPERANDO_INGRESO:
+
+			if((true == p_task_normal_dta->flag) && (p_task_normal_dta->tick == 0))
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_CERRAR);
+				put_event_task_actuator(EV_LED_XX_OFF, ID_SEMAFORO_INGRESO);
+
+				p_task_normal_dta->state = ST_SYS_01_CERRANDO_INGRESO;
+
+			}
+
+			p_task_normal_dta->tick--;
+
+			break;
+
+		case ST_SYS_01_CERRANDO_INGRESO:
+			//Corregir esto, no va a funcionar aca. Hacer checkeo en dos pasos
+			if((true == p_task_normal_dta->flag) &&
+			(EV_SYS_01_PUERTA_INGRESO_CERRADA ==  p_task_normal_dta->event) &&
+			(EV_SYS_01_BARRERA_INACTIVA ==  p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_CERRAR);
+				p_task_normal_dta->state = ST_SYS_01_ESPERAR_INGRESO;
+
+			}
+			else if((true == p_task_normal_dta->flag) &&
+			(EV_SYS_01_PUERTA_INGRESO_CERRADA ==  p_task_normal_dta->event) &&
+			(EV_SYS_01_BARRERA_ACTIVA ==  p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				p_task_normal_dta->tick = DEL_SYS_01_PERMANENCIA;
+				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_CERRAR);
+				p_task_normal_dta->state = ST_SYS_01_PERSONA_ADENTRO;
+			}
+
+			break;
+
+		case ST_SYS_01_PERSONA_ADENTRO:
+			break;
+
+		case ST_SYS_01_TIEMPO_EXCEDIDO:
+			break;
+
+		case ST_SYS_01_ABRIENDO_EGRESO:
+			break;
+
+		case ST_SYS_01_ESPERANDO_EGRESO:
+			break;
+
+		case ST_SYS_01_CERRANDO_EGRESO:
+			break;
+
+		/*
 			case ST_SYS_01_AUTOAUSENTE:
 
 				if((true == p_task_normal_dta->flag) && (EV_SYS_01_SENSOR_MAGNETICO_ACTIVO ==  p_task_normal_dta->event))
@@ -238,6 +324,7 @@ void task_normal_update(void *parameters)
 					p_task_normal_dta->state = ST_SYS_01_AUTOAUSENTE;
 				}
 				break;
+			*/
 
 			/*case ST_SYS_XX_IDLE:
 

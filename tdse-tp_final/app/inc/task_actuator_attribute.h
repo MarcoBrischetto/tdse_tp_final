@@ -120,10 +120,11 @@ typedef enum task_actuator_st {ST_LED_XX_OFF,
 
 /* Identifier of Task Actuator */
 typedef enum task_actuator_id {ID_LED_A,
-							   ID_LED_01_GENERAR_TICKET,
-							   ID_LED_02_SUBIR_BARRERA,
-							   ID_LED_01_TRAGAR_TICKET,
-							   ID_LED_02_BAJAR_BARRERA
+							   ID_MOTOR_ABRIR,
+							   ID_MOTOR_CERRAR,
+							   ID_SEMAFORO_INGRESO,
+							   ID_SEMAFORO_EGRESO,
+							   ID_BUZZER
 } task_actuator_id_t;
 
 typedef struct

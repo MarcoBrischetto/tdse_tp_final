@@ -48,12 +48,7 @@ extern "C" {
 /********************** macros ***********************************************/
 
 /********************** typedef **********************************************/
-typedef struct{
-	uint8_t motor_id;
-	uint8_t power;
-	uint8_t speed;
-	uint8_t spin;
-}motor_t;
+
 
 /********************** external data declaration ****************************/
 extern uint32_t g_task_set_up_cnt;

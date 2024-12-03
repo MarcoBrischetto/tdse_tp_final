@@ -62,37 +62,33 @@ extern "C" {
  */
 
 /* Events to excite Task Menu */
-typedef enum task_set_up_ev {EV_MEN_MEN_IDLE,
-						   EV_MEN_MEN_ACTIVE,
-						   EV_MEN_ENT_IDLE,
-						   EV_MEN_ENT_ACTIVE,
-						   EV_MEN_NEX_IDLE,
-						   EV_MEN_NEX_ACTIVE,
-						   EV_MEN_ESC_IDLE,
-						   EV_MEN_ESC_ACTIVE} task_set_up_ev_t;
+typedef enum task_set_up_ev {EV_SYS_02_BTN_CONF_IDLE,
+							EV_SYS_02_BTN_CONF_ACTIVE,
+							EV_SYS_02_BTN_ENT_IDLE,
+						   EV_SYS_02_BTN_ENT_ACTIVE,
+						   EV_SYS_02_BTN_NXT_IDLE,
+						   EV_SYS_02_BTN_NXT_ACTIVE,
+						   EV_SYS_02_BTN_ESC_IDLE,
+						   EV_SYS_02_BTN_ESC_ACTIVE} task_set_up_ev_t;
 
 /* State of Task Menu */
 typedef enum task_set_up_st {ST_MEN_XX_IDLE,
 						   ST_MEN_XX_ACTIVE,
-						   ST_MEN_XX_MAIN,
-						   ST_MEN_XX_SET_UP_1,
-						   ST_MEN_XX_SET_UP_2,
-						   ST_MEN_XX_SET_UP_POWER,
-						   ST_MEN_XX_SET_UP_SPEED,
-						   ST_MEN_XX_SET_UP_SPIN
+						   ST_SET_UP_02_MAIN,
+						   ST_SET_UP_02_MENU,
+						   ST_SET_UP_02_PUERTA,
+						   ST_SET_UP_02_PERMANENCIA,
 							} task_set_up_st_t;
 
 typedef struct
 {
-	uint32_t		tick;
-	task_set_up_st_t	state;
-	task_set_up_ev_t	event;
-	bool			flag;
-	uint8_t	motor_id;
-	uint8_t motor_opt;
-	uint8_t	power_opt;
-	uint8_t	speed_opt;
-	uint8_t spin_opt;
+	uint32_t tick;
+	task_set_up_st_t state;
+	task_set_up_ev_t event;
+	bool flag;
+	uint8_t	option;
+	uint8_t opt_tiempo_puerta;
+	uint8_t opt_tiempo_permanencia;
 } task_set_up_dta_t;
 
 /********************** external data declaration ****************************/

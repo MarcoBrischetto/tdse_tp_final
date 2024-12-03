@@ -48,6 +48,7 @@
 #include "task_sensor.h"
 #include "task_set_up.h"
 #include "task_normal.h"
+#include "task_actuator.h"
 
 /********************** macros and definitions *******************************/
 #define G_APP_CNT_INI		0ul
@@ -73,8 +74,9 @@ typedef struct {
 /********************** internal data declaration ****************************/
 const task_cfg_t task_cfg_list[]	= {
 		{task_sensor_init,	task_sensor_update, 	NULL},
-		{task_set_up_init,	task_set_up_update, 		NULL},
-		{task_normal_init,	task_normal_update, 	NULL}
+		{task_set_up_init,	task_set_up_update, 	NULL},
+		{task_normal_init,	task_normal_update, 	NULL},
+		{task_actuator_init, task_actuator_update, 	NULL}
 };
 
 #define TASK_QTY	(sizeof(task_cfg_list)/sizeof(task_cfg_t))
@@ -173,6 +175,8 @@ void HAL_SYSTICK_Callback(void)
 
 	g_task_sensor_tick_cnt++;
 	g_task_set_up_tick_cnt++;
+	g_task_normal_tick_cnt++;
+	g_task_actuator_tick_cnt++;
 
 	//HAL_GPIO_TogglePin(LED_A_PORT, LED_A_PIN);
 }

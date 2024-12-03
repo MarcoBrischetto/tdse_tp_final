@@ -51,6 +51,10 @@
 #include "task_set_up.h"
 #include "task_set_up_interface.h"
 #include "display.h"
+#include "configuracion.h"
+
+/*External Libraries*/
+#include <stdlib.h>
 
 /********************** macros and definitions *******************************/
 #define G_TASK_MEN_CNT_INI			0ul
@@ -62,7 +66,7 @@
 
 /********************** internal data declaration ****************************/
 task_set_up_dta_t task_set_up_dta =
-	{DEL_MEN_XX_MIN, ST_MEN_XX_MAIN, EV_MEN_MEN_ACTIVE, false, 1, 1, 1, 1, 1};
+	{DEL_MEN_XX_MIN, ST_SET_UP_02_MAIN, EV_SYS_02_BTN_CONF_IDLE, false, 1, 1, 1};
 
 #define SET_UP_DTA_QTY	(sizeof(task_set_up_dta)/sizeof(task_set_up_dta_t))
 
@@ -76,25 +80,22 @@ const char *p_task_set_up_ 		= "Non-Blocking & Update By Time Code";
 uint32_t g_task_set_up_cnt;
 volatile uint32_t g_task_set_up_tick_cnt;
 
-char set_up_fijo[16] = "Enter/Next/Esc";
-char set_up1[2][16] = {">Motor1",">Motor2"};
-char set_up2[3][16] = {">Power",">Speed",">Spin"};
-char set_up3[2][16] = {">ON",">OFF"};
-char set_up4[10][16]={">0",">1",">2",">3",">4",">5",">6",">7",">8",">9"};
-char set_up5[2][16]={">LEFT",">RIGHT"};
+#define CNT_OPT	2
+#define CNT_OPT_PUERTA	7
+#define CNT_OPT_PERMANENCIA 9
 
-char string_motor1[2][16]={"ON","OFF"};
-char string_motor2[10][16]={"0","1","2","3","4","5","6","7","8","9"};
-char string_motor3[2][16]={"L","R"};
+char set_up_fijo[16] = "Enter/Next/Esc";
+char set_up1[CNT_OPT][16] = {">Puerta",">Permanencia"};
+char set_up2[CNT_OPT_PUERTA][16] = {">3",">4",">5",">6",">7",">8",">9"};
+char set_up3[CNT_OPT_PERMANENCIA][16]={">10",">20",">30",">40",">50",">60",">70",">80",">90"};
+
+char string_tiempos_puerta[CNT_OPT_PUERTA][16]={"3","4","5","6","7","8","9"};
+char string_tiempos_permanencia[CNT_OPT_PERMANENCIA][16]={"10","20","30","40","50","60","70","80","90"};
 
 char *linea1;
 char *linea2;
 char aux1[16];
 char aux2[16];
-motor_t motor[2] = {{1,1,1,1},{2,1,1,1}};
-
-//static void motor_init(motor_t motor);
-//static void motor_actualizar(motor_t motor, uint8_t power, uint8_t speed, uint8_t spin);
 
 /********************** external functions definition ************************/
 void task_set_up_init(void *parameters)
@@ -130,15 +131,9 @@ void task_set_up_init(void *parameters)
 
     displayInit( DISPLAY_CONNECTION_GPIO_4BITS );
 
-    //displayCharPositionWrite(0, 0);
-    //displayStringWrite("TdSE Bienvenidos");
+    sprintf(aux1,"Config: %d %d", configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
+    sprintf(aux2,"Temp:");
 
-	//displayCharPositionWrite(0, 1);
-	//SdisplayStringWrite("Test Nro: ");
-
-    // Primera escritura
-    sprintf(aux1,"Motor1:%s,%s,%s",string_motor1[motor[0].power-1],string_motor2[motor[0].speed-1],string_motor3[motor[0].spin-1]);
-    sprintf(aux2,"Motor2:%s,%s,%s",string_motor1[motor[1].power-1],string_motor2[motor[1].speed-1],string_motor3[motor[1].spin-1]);
     linea1=aux1;
     linea2=aux2;
 
@@ -161,7 +156,6 @@ void task_set_up_update(void *parameters)
 {
 	task_set_up_dta_t *p_task_set_up_dta;
 	bool b_time_update_required = false;
-	char set_up_str[4];
 
 	/* Update Task Menu Counter */
 	g_task_set_up_cnt++;
@@ -219,181 +213,134 @@ void task_set_up_update(void *parameters)
 				p_task_set_up_dta->flag = true;
 				p_task_set_up_dta->event = get_event_task_set_up();
 
-			switch (p_task_set_up_dta->state)
-			{
-				case ST_MEN_XX_IDLE:
+				switch (p_task_set_up_dta->state)
+				{
+				/*
+					case ST_MEN_XX_IDLE:
 
-					if ((true == p_task_set_up_dta->flag) && (EV_MEN_MEN_ACTIVE == p_task_set_up_dta->event))
-					{
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->state = ST_MEN_XX_ACTIVE;
-					}
+						if ((true == p_task_set_up_dta->flag) && (EV_MEN_MEN_ACTIVE == p_task_set_up_dta->event))
+						{
+							p_task_set_up_dta->flag = false;
+							p_task_set_up_dta->state = ST_MEN_XX_ACTIVE;
+						}
 
-					break;
+						break;
 
-				case ST_MEN_XX_ACTIVE:
+					case ST_MEN_XX_ACTIVE:
 
-					if ((true == p_task_set_up_dta->flag) && (EV_MEN_MEN_IDLE == p_task_set_up_dta->event))
-					{
-						p_task_set_up_dta->flag = false;
+						if ((true == p_task_set_up_dta->flag) && (EV_MEN_MEN_IDLE == p_task_set_up_dta->event))
+						{
+							p_task_set_up_dta->flag = false;
+							p_task_set_up_dta->state = ST_MEN_XX_IDLE;
+
+						}
+
+						break;
+				 	 */
+					case ST_SET_UP_02_MAIN:
+						if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_CONF_ACTIVE == p_task_set_up_dta->event))
+						{
+							linea1 = set_up_fijo;
+							linea2 = set_up1[p_task_set_up_dta->option - 1];
+							p_task_set_up_dta->flag = false;
+							p_task_set_up_dta->state = ST_SET_UP_02_MENU;
+						}
+
+						break;
+
+					case ST_SET_UP_02_MENU:
+						if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ENT_ACTIVE == p_task_set_up_dta->event))
+						{
+							p_task_set_up_dta->flag = false;
+							if(p_task_set_up_dta->option == 1){
+								p_task_set_up_dta->state = ST_SET_UP_02_PUERTA;
+								linea2 = set_up2[p_task_set_up_dta->opt_tiempo_puerta - 1];
+							}
+							else if(p_task_set_up_dta->option == 2){
+								p_task_set_up_dta->state = ST_SET_UP_02_PERMANENCIA;
+								linea2 = set_up3[p_task_set_up_dta->opt_tiempo_permanencia - 1];
+							}
+
+						}
+						else if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ESC_ACTIVE == p_task_set_up_dta->event))
+						{
+							p_task_set_up_dta->flag = false;
+							p_task_set_up_dta->state = ST_SET_UP_02_MAIN;
+							linea1 = aux1;
+							linea2 = aux2;
+						}
+						else if((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_NXT_ACTIVE == p_task_set_up_dta->event)){
+							p_task_set_up_dta->option = (p_task_set_up_dta->option%CNT_OPT) + 1;
+							p_task_set_up_dta->flag = false;
+							linea2 = set_up1[p_task_set_up_dta->option - 1];
+						}
+
+						break;
+
+					case ST_SET_UP_02_PUERTA:
+
+						if((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ENT_ACTIVE == p_task_set_up_dta->event)){
+							//Agregar guardado
+							configuracion.tiempo_puerta = atoi(string_tiempos_puerta[p_task_set_up_dta->opt_tiempo_puerta-1]);
+							sprintf(aux1,"Config: %d %d",configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
+						}
+						else if((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_NXT_ACTIVE == p_task_set_up_dta->event)){
+							p_task_set_up_dta->opt_tiempo_puerta = (p_task_set_up_dta->opt_tiempo_puerta%CNT_OPT_PUERTA) + 1;
+							p_task_set_up_dta->flag = false;
+							linea2 = set_up2[p_task_set_up_dta->opt_tiempo_puerta - 1];
+						}
+						else if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ESC_ACTIVE == p_task_set_up_dta->event))
+						{
+							p_task_set_up_dta->flag = false;
+							p_task_set_up_dta->state = ST_SET_UP_02_MENU;
+							linea1 = set_up_fijo;
+							linea2 = set_up1[p_task_set_up_dta->option - 1];
+
+						}
+
+						break;
+
+					case ST_SET_UP_02_PERMANENCIA:
+
+						if((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ENT_ACTIVE == p_task_set_up_dta->event)){
+							configuracion.tiempo_permanencia = atoi(string_tiempos_permanencia[p_task_set_up_dta->opt_tiempo_permanencia-1]);
+							sprintf(aux1,"Config: %d %d",configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
+						}
+						else if((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_NXT_ACTIVE == p_task_set_up_dta->event)){
+							p_task_set_up_dta->opt_tiempo_permanencia = (p_task_set_up_dta->opt_tiempo_permanencia%CNT_OPT_PERMANENCIA) + 1;
+							p_task_set_up_dta->flag = false;
+							linea2 = set_up3[p_task_set_up_dta->opt_tiempo_permanencia - 1];
+						}
+						else if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ESC_ACTIVE == p_task_set_up_dta->event))
+						{
+							p_task_set_up_dta->flag = false;
+							p_task_set_up_dta->state = ST_SET_UP_02_MENU;
+							linea1 = set_up_fijo;
+							linea2 = set_up1[p_task_set_up_dta->option - 1];
+
+						}
+
+						break;
+
+					default:
+
+						p_task_set_up_dta->tick  = DEL_MEN_XX_MIN;
 						p_task_set_up_dta->state = ST_MEN_XX_IDLE;
+						p_task_set_up_dta->event = ST_SET_UP_02_MAIN;
+						p_task_set_up_dta->flag  = false;
 
-					}
+						break;
+				}
+				displayCharPositionWrite(0, 0);
+				displayStringWrite("                ");
+				displayCharPositionWrite(0, 1);
+				displayStringWrite("                ");
 
-					break;
-
-				case ST_MEN_XX_MAIN:
-					if ((true == p_task_set_up_dta->flag) && (EV_MEN_MEN_ACTIVE == p_task_set_up_dta->event))
-					{
-						linea1 = set_up_fijo;
-						linea2 = set_up1[p_task_set_up_dta->motor_id - 1];
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->state = ST_MEN_XX_SET_UP_1;
-					}
-
-					break;
-
-				case ST_MEN_XX_SET_UP_1:
-					if ((true == p_task_set_up_dta->flag) && (EV_MEN_ENT_ACTIVE == p_task_set_up_dta->event))
-					{
-						linea1=set_up_fijo;
-						linea2 = set_up2[p_task_set_up_dta->motor_opt - 1];
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->state = ST_MEN_XX_SET_UP_2;
-					}
-					else if ((true == p_task_set_up_dta->flag) && (EV_MEN_ESC_ACTIVE == p_task_set_up_dta->event))
-					{
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->state = ST_MEN_XX_MAIN;
-						linea1=aux1;
-						linea2=aux2;
-					}
-					else if((true == p_task_set_up_dta->flag) && (EV_MEN_NEX_ACTIVE == p_task_set_up_dta->event)){
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->motor_id = (p_task_set_up_dta->motor_id%2) + 1;
-						linea1 = set_up_fijo;
-						linea2 = set_up1[p_task_set_up_dta->motor_id - 1];
-					}
-					break;
-
-				case ST_MEN_XX_SET_UP_2:
-					if ((true == p_task_set_up_dta->flag) && (EV_MEN_ENT_ACTIVE == p_task_set_up_dta->event))
-					{
-						p_task_set_up_dta->flag = false;
-
-						if(p_task_set_up_dta->motor_opt == 1){
-							p_task_set_up_dta->state = ST_MEN_XX_SET_UP_POWER;
-							linea2 = set_up3[p_task_set_up_dta->power_opt - 1];
-						}
-						else if(p_task_set_up_dta->motor_opt == 2){
-							p_task_set_up_dta->state = ST_MEN_XX_SET_UP_SPEED;
-							linea2 = set_up4[p_task_set_up_dta->speed_opt - 1];
-						}
-						else if(p_task_set_up_dta->motor_opt == 3){
-							p_task_set_up_dta->state = ST_MEN_XX_SET_UP_SPIN;
-							linea2 = set_up5[p_task_set_up_dta->spin_opt - 1];
-						}
-
-					}
-					else if ((true == p_task_set_up_dta->flag) && (EV_MEN_ESC_ACTIVE == p_task_set_up_dta->event))
-					{
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->state = ST_MEN_XX_SET_UP_1;
-						linea1 = set_up_fijo;
-						linea2 = set_up1[p_task_set_up_dta->motor_id - 1];
-					}
-					else if((true == p_task_set_up_dta->flag) && (EV_MEN_NEX_ACTIVE == p_task_set_up_dta->event)){
-						p_task_set_up_dta->motor_opt = (p_task_set_up_dta->motor_opt%3) + 1;
-						p_task_set_up_dta->flag = false;
-						linea2 = set_up2[p_task_set_up_dta->motor_opt - 1];
-					}
-
-					break;
-
-				case ST_MEN_XX_SET_UP_POWER:
-
-					if((true == p_task_set_up_dta->flag) && (EV_MEN_ENT_ACTIVE == p_task_set_up_dta->event)){
-						motor[p_task_set_up_dta->motor_id-1].power = p_task_set_up_dta->power_opt;
-						sprintf(aux1,"Motor1:%s,%s,%s",string_motor1[motor[0].power-1],string_motor2[motor[0].speed-1],string_motor3[motor[0].spin-1]);
-						sprintf(aux2,"Motor2:%s,%s,%s",string_motor1[motor[1].power-1],string_motor2[motor[1].speed-1],string_motor3[motor[1].spin-1]);
-					}
-					else if((true == p_task_set_up_dta->flag) && (EV_MEN_NEX_ACTIVE == p_task_set_up_dta->event)){
-						p_task_set_up_dta->power_opt = (p_task_set_up_dta->power_opt%2) + 1;
-						p_task_set_up_dta->flag = false;
-						linea2 = set_up3[p_task_set_up_dta->power_opt - 1];
-					}
-					else if ((true == p_task_set_up_dta->flag) && (EV_MEN_ESC_ACTIVE == p_task_set_up_dta->event))
-					{
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->state = ST_MEN_XX_SET_UP_2;
-						linea2 = set_up2[p_task_set_up_dta->motor_opt - 1];
-
-					}
-
-					break;
-
-				case ST_MEN_XX_SET_UP_SPEED:
-					if((true == p_task_set_up_dta->flag) && (EV_MEN_ENT_ACTIVE == p_task_set_up_dta->event)){
-						motor[p_task_set_up_dta->motor_id-1].speed = p_task_set_up_dta->speed_opt;
-						sprintf(aux1,"Motor1:%s,%s,%s",string_motor1[motor[0].power-1],string_motor2[motor[0].speed-1],string_motor3[motor[0].spin-1]);
-						sprintf(aux2,"Motor2:%s,%s,%s",string_motor1[motor[1].power-1],string_motor2[motor[1].speed-1],string_motor3[motor[1].spin-1]);
-
-					}
-					else if((true == p_task_set_up_dta->flag) && (EV_MEN_NEX_ACTIVE == p_task_set_up_dta->event)){
-						p_task_set_up_dta->speed_opt = (p_task_set_up_dta->speed_opt%10) + 1;
-						p_task_set_up_dta->flag = false;
-						linea2 = set_up4[p_task_set_up_dta->speed_opt - 1];
-					}
-					else if ((true == p_task_set_up_dta->flag) && (EV_MEN_ESC_ACTIVE == p_task_set_up_dta->event))
-					{
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->state = ST_MEN_XX_SET_UP_2;
-						linea2 = set_up2[p_task_set_up_dta->motor_opt - 1];
-					}
-
-					break;
-
-				case ST_MEN_XX_SET_UP_SPIN:
-					if((true == p_task_set_up_dta->flag) && (EV_MEN_ENT_ACTIVE == p_task_set_up_dta->event)){
-						motor[p_task_set_up_dta->motor_id-1].spin = p_task_set_up_dta->spin_opt;
-						sprintf(aux1,"Motor1:%s,%s,%s",string_motor1[motor[0].power-1],string_motor2[motor[0].speed-1],string_motor3[motor[0].spin-1]);
-						sprintf(aux2,"Motor2:%s,%s,%s",string_motor1[motor[1].power-1],string_motor2[motor[1].speed-1],string_motor3[motor[1].spin-1]);
-
-					}
-					else if((true == p_task_set_up_dta->flag) && (EV_MEN_NEX_ACTIVE == p_task_set_up_dta->event)){
-						p_task_set_up_dta->spin_opt = (p_task_set_up_dta->spin_opt%2) + 1;
-						p_task_set_up_dta->flag = false;
-
-						linea2 = set_up5[p_task_set_up_dta->spin_opt - 1];
-					}
-					else if ((true == p_task_set_up_dta->flag) && (EV_MEN_ESC_ACTIVE == p_task_set_up_dta->event))
-					{
-						p_task_set_up_dta->flag = false;
-						p_task_set_up_dta->state = ST_MEN_XX_SET_UP_2;
-						linea2 = set_up2[p_task_set_up_dta->motor_opt - 1];
-					}
-
-					break;
-
-				default:
-
-					p_task_set_up_dta->tick  = DEL_MEN_XX_MIN;
-					p_task_set_up_dta->state = ST_MEN_XX_IDLE;
-					p_task_set_up_dta->event = EV_MEN_MEN_IDLE;
-					p_task_set_up_dta->flag  = false;
-
-					break;
+				displayCharPositionWrite(0, 0);
+				displayStringWrite(linea1);
+				displayCharPositionWrite(0, 1);
+				displayStringWrite(linea2);
 			}
-			displayCharPositionWrite(0, 0);
-			displayStringWrite("                ");
-			displayCharPositionWrite(0, 1);
-			displayStringWrite("                ");
-
-			displayCharPositionWrite(0, 0);
-			displayStringWrite(linea1);
-			displayCharPositionWrite(0, 1);
-			displayStringWrite(linea2);
-		}
 		}
 	}
 }

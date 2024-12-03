@@ -105,7 +105,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
 	/* Application Init */
-	app_init();
+  app_init();
 
   /* USER CODE END 2 */
 
@@ -271,7 +271,10 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, D9_Pin|O1_Pin|O2_Pin|O3_Pin
-                          |O4_Pin|O5_Pin, GPIO_PIN_RESET);
+                          |O4_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(O5_GPIO_Port, O5_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(D10_GPIO_Port, D10_Pin, GPIO_PIN_RESET);
@@ -332,6 +335,7 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
+  HAL_GPIO_WritePin(O5_GPIO_Port, O5_Pin, GPIO_PIN_SET);
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
