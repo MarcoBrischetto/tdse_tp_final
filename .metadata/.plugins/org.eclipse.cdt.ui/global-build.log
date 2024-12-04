@@ -1,14 +1,34 @@
-15:32:21 **** Incremental Build of configuration Debug for project tdse-tp_final ****
+20:55:51 **** Incremental Build of configuration Debug for project tdse-tp_final ****
 make -j2 all 
+arm-none-eabi-gcc "../app/src/task_temperature.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../app/inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_temperature.d" -MT"app/src/task_temperature.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_temperature.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../app/inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../app/src/task_temperature.c: In function 'task_temperature_update':
+../app/src/task_temperature.c:121:33: warning: variable 'p_task_temperature_dta' set but not used [-Wunused-but-set-variable]
+  121 |         task_temperature_dta_t *p_task_temperature_dta;
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "tdse-tp_final.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\MBRIS\Desktop\Git\tdse_tp_final\tdse-tp_final\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tdse-tp_final.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.16.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: tdse-tp_final.elf has a LOAD segment with RWX permissions
+Finished building target: tdse-tp_final.elf
+ 
 arm-none-eabi-size  tdse-tp_final.elf 
+arm-none-eabi-objdump -h -S tdse-tp_final.elf  > "tdse-tp_final.list"
    text	   data	    bss	    dec	    hex	filename
-  23372	    784	   2544	  26700	   684c	tdse-tp_final.elf
+  28688	    792	   2632	  32112	   7d70	tdse-tp_final.elf
 Finished building: default.size.stdout
  
-15:32:28 **** Incremental Build of configuration Debug for project tdse-tp_final ****
+Finished building: tdse-tp_final.list
+ 
+20:56:02 **** Incremental Build of configuration Debug for project tdse-tp_final ****
 make -j2 all 
 arm-none-eabi-size  tdse-tp_final.elf 
    text	   data	    bss	    dec	    hex	filename
-  23372	    784	   2544	  26700	   684c	tdse-tp_final.elf
+  28688	    792	   2632	  32112	   7d70	tdse-tp_final.elf
+Finished building: default.size.stdout
+ 
+20:56:20 **** Incremental Build of configuration Debug for project tdse-tp_final ****
+make -j2 all 
+arm-none-eabi-size  tdse-tp_final.elf 
+   text	   data	    bss	    dec	    hex	filename
+  28688	    792	   2632	  32112	   7d70	tdse-tp_final.elf
 Finished building: default.size.stdout
  

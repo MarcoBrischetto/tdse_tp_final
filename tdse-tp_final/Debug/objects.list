@@ -31,3 +31,4 @@
 "./app/src/task_sensor.o"
 "./app/src/task_set_up.o"
 "./app/src/task_set_up_interface.o"
+"./app/src/task_temperature.o"
