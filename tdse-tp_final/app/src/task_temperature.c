@@ -48,6 +48,7 @@
 #include "board.h"
 #include "app.h"
 #include "task_adc_attribute.h"
+#include "task_temperature.h"
 
 /********************** macros and definitions *******************************/
 #define G_TASK_SYS_CNT_INI			0ul
@@ -57,15 +58,17 @@
 #define DEL_SYS_XX_MED				50ul
 #define DEL_SYS_XX_MAX				500ul
 
+#define DEL_SYS_03_ESPERA_CONVERSION 10000ul
+
 /********************** internal data declaration ****************************/
 task_temperature_dta_t task_temperature_dta =
-	{DEL_SYS_XX_MIN, ST_SYS_XX_IDLE, EV_SYS_XX_IDLE, false};
+	{DEL_SYS_XX_MIN, ST_SYS_03_INICIAR_MEDICION, EV_SYS_XX_IDLE, false};
 
 #define temperature_DTA_QTY	(sizeof(task_temperature_dta)/sizeof(task_temperature_dta_t))
 
 temperatura_t temperatura = {0, 0};
-bool flag_conversion1 = 0;
-bool flag_conversion2 = 0;
+bool flag_conversion1 = false;
+bool flag_conversion2 = false;
 
 volatile uint16_t sample1 = 0;
 volatile uint16_t sample2 = 0;
@@ -152,7 +155,7 @@ void task_temperature_update(void *parameters)
     	/* Update Task temperature Data Pointer */
 		p_task_temperature_dta = &task_temperature_dta;
 
-
+		/*
 		if(!flag_conversion1){
 			HAL_ADC_Start_IT(&hadc1);
 		}
@@ -176,11 +179,44 @@ void task_temperature_update(void *parameters)
 			temp_aux = (int)temperatura.ambiente;
 			LOGGER_LOG("Grados ambiente = %d °C\n", temp_aux);
 		}
+		*/
 
-		/*
 		switch (p_task_temperature_dta->state)
 		{
-			case ST_SYS_XX_IDLE:
+			case ST_SYS_03_INICIAR_MEDICION:
+
+				HAL_ADC_Start_IT(&hadc1);
+				HAL_ADC_Start_IT(&hadc2);
+				p_task_temperature_dta->state = ST_SYS_03_ESPERAR_MEDICION;
+				break;
+
+			case ST_SYS_03_ESPERAR_MEDICION:
+
+				if(flag_conversion1 && flag_conversion2){
+
+					flag_conversion1 = false;
+					temperatura.micro = 25 + (V25 - (ADC_REF/ADC_RESOLUTION)*(float)sample1)/(PENDIENTE);
+					temp_aux = (int)temperatura.micro;
+					LOGGER_LOG("Grados micro = %d °C\n", temp_aux);
+
+					flag_conversion2 = false;
+					temperatura.ambiente = (100.0*ADC_REF/ADC_RESOLUTION)*(float)sample2;
+					temp_aux = (int)temperatura.ambiente;
+					LOGGER_LOG("Grados ambiente = %d °C\n", temp_aux);
+
+					p_task_temperature_dta->tick = DEL_SYS_03_ESPERA_CONVERSION;
+					p_task_temperature_dta->state = ST_SYS_03_STANDBY;
+				}
+
+				break;
+
+			case ST_SYS_03_STANDBY:
+
+				if(p_task_temperature_dta->tick == DEL_SYS_XX_MIN){
+					p_task_temperature_dta->state = ST_SYS_03_INICIAR_MEDICION;
+				}
+
+				p_task_temperature_dta->tick--;
 
 				break;
 
@@ -188,7 +224,7 @@ void task_temperature_update(void *parameters)
 
 				break;
 		}
-		*/
+
 	}
 }
 

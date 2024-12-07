@@ -165,7 +165,6 @@ void task_normal_update(void *parameters)
 				p_task_normal_dta->flag = false;
 				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_ABRIR);
 				p_task_normal_dta->state = ST_SYS_01_ABRIENDO_INGRESO;
-
 			}
 
 			break;
@@ -187,34 +186,43 @@ void task_normal_update(void *parameters)
 
 		case ST_SYS_01_ESPERANDO_INGRESO:
 
-			if((true == p_task_normal_dta->flag) && (p_task_normal_dta->tick == 0))
+			if(p_task_normal_dta->tick == DEL_SYS_XX_MIN)
 			{
 				p_task_normal_dta->flag = false;
 				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_CERRAR);
 				put_event_task_actuator(EV_LED_XX_OFF, ID_SEMAFORO_INGRESO);
 
-				p_task_normal_dta->state = ST_SYS_01_CERRANDO_INGRESO;
+				p_task_normal_dta->state = ST_SYS_01_CERRANDO_INGRESO_TIEMPO;
 
 			}
+			else if((true == p_task_normal_dta->flag) && (EV_SYS_01_BARRERA_ACTIVA == p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_CERRAR);
+				put_event_task_actuator(EV_LED_XX_OFF, ID_SEMAFORO_INGRESO);
 
-			p_task_normal_dta->tick--;
+				p_task_normal_dta->state = ST_SYS_01_CERRANDO_INGRESO_PERSONA;
+			}
+
+			if(p_task_normal_dta->tick > DEL_SYS_XX_MIN) p_task_normal_dta->tick--;
 
 			break;
 
-		case ST_SYS_01_CERRANDO_INGRESO:
-			//Corregir esto, no va a funcionar aca. Hacer checkeo en dos pasos
-			if((true == p_task_normal_dta->flag) &&
-			(EV_SYS_01_PUERTA_INGRESO_CERRADA ==  p_task_normal_dta->event) &&
-			(EV_SYS_01_BARRERA_INACTIVA ==  p_task_normal_dta->event))
+		case ST_SYS_01_CERRANDO_INGRESO_TIEMPO:
+
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_PUERTA_INGRESO_CERRADA == p_task_normal_dta->event))
 			{
 				p_task_normal_dta->flag = false;
 				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_CERRAR);
 				p_task_normal_dta->state = ST_SYS_01_ESPERAR_INGRESO;
-
 			}
-			else if((true == p_task_normal_dta->flag) &&
-			(EV_SYS_01_PUERTA_INGRESO_CERRADA ==  p_task_normal_dta->event) &&
-			(EV_SYS_01_BARRERA_ACTIVA ==  p_task_normal_dta->event))
+
+
+			break;
+
+		case ST_SYS_01_CERRANDO_INGRESO_PERSONA:
+
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_PUERTA_INGRESO_CERRADA == p_task_normal_dta->event))
 			{
 				p_task_normal_dta->flag = false;
 				p_task_normal_dta->tick = DEL_SYS_01_PERMANENCIA;
@@ -225,18 +233,86 @@ void task_normal_update(void *parameters)
 			break;
 
 		case ST_SYS_01_PERSONA_ADENTRO:
+
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_BTN_EGRESO_DOWN == p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_ABRIR);
+				p_task_normal_dta->state = ST_SYS_01_ABRIENDO_EGRESO;
+
+			}
+			else if(p_task_normal_dta->tick == DEL_SYS_XX_MIN){
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_BLINK, ID_BUZZER);
+				p_task_normal_dta->state = ST_SYS_01_TIEMPO_EXCEDIDO;
+			}
+
+			if( p_task_normal_dta->tick > DEL_SYS_XX_MIN) p_task_normal_dta->tick--;
+
 			break;
 
 		case ST_SYS_01_TIEMPO_EXCEDIDO:
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_BTN_EGRESO_DOWN == p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_ABRIR);
+				p_task_normal_dta->state = ST_SYS_01_ABRIENDO_EGRESO;
+
+			}
 			break;
 
 		case ST_SYS_01_ABRIENDO_EGRESO:
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_PUERTA_EGRESO_ABIERTA == p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				p_task_normal_dta->tick = DEL_SYS_01_ESPERA;
+				put_event_task_actuator(EV_LED_XX_ON, ID_SEMAFORO_EGRESO);
+				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_ABRIR);
+				p_task_normal_dta->state = ST_SYS_01_ESPERANDO_EGRESO;
+
+			}
+
 			break;
 
 		case ST_SYS_01_ESPERANDO_EGRESO:
+
+			if(p_task_normal_dta->tick == DEL_SYS_XX_MIN)
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_OFF, ID_SEMAFORO_EGRESO);
+				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_CERRAR);
+				p_task_normal_dta->state = ST_SYS_01_CERRANDO_EGRESO_TIEMPO;
+			}
+			else if((true == p_task_normal_dta->flag) &&(EV_SYS_01_BARRERA_INACTIVA == p_task_normal_dta->event)){
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_OFF, ID_SEMAFORO_EGRESO);
+				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_CERRAR);
+				p_task_normal_dta->state = ST_SYS_01_CERRANDO_EGRESO_PERSONA;
+			}
+
+			if( p_task_normal_dta->tick > DEL_SYS_XX_MIN) p_task_normal_dta->tick--;
+
 			break;
 
-		case ST_SYS_01_CERRANDO_EGRESO:
+		case ST_SYS_01_CERRANDO_EGRESO_TIEMPO:
+			if((true == p_task_normal_dta->flag) &&(EV_SYS_01_PUERTA_EGRESO_CERRADA == p_task_normal_dta->event)){
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_OFF, ID_SEMAFORO_EGRESO);
+				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_CERRAR);
+				p_task_normal_dta->state = ST_SYS_01_PERSONA_ADENTRO;
+			}
+			break;
+
+		case ST_SYS_01_CERRANDO_EGRESO_PERSONA:
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_PUERTA_EGRESO_CERRADA == p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_CERRAR);
+				put_event_task_actuator(EV_LED_XX_OFF, ID_BUZZER);
+				p_task_normal_dta->state = ST_SYS_01_ESPERAR_INGRESO;
+
+			}
+
 			break;
 
 		/*

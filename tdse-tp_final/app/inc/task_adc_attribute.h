@@ -70,6 +70,9 @@ typedef enum task_temperature_ev {EV_SYS_XX_IDLE,
 /* State of Task temperature */
 typedef enum task_temperature_st {ST_SYS_XX_IDLE,
 							 	 ST_SYS_XX_ACTIVE,
+								 ST_SYS_03_STANDBY,
+								 ST_SYS_03_ESPERAR_MEDICION,
+								 ST_SYS_03_INICIAR_MEDICION
 } task_temperature_st_t;
 
 typedef struct
