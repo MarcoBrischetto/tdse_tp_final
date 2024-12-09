@@ -45,6 +45,16 @@ extern "C" {
 
 /********************** inclusions *******************************************/
 
+/**********************external variabless ***********************************/
+
+/*Estructura de temperaturas*/
+typedef struct{
+	float ambiente;
+	float micro;
+}temperatura_t;
+
+extern temperatura_t temperatura;
+
 /********************** macros ***********************************************/
 #define V25 1.43			//Tension del sensor interno a 25 grados
 #define PENDIENTE 4.3e-3	//Pendiente del sensor de temperatura interno

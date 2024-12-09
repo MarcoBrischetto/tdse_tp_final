@@ -63,8 +63,9 @@
 
 /********************** internal data declaration ****************************/
 const task_sensor_cfg_t task_sensor_cfg_list[] = {
-	{ID_BTN_MEN,  BTN_MEN_PORT,  BTN_MEN_PIN,  BTN_MEN_PRESSED, DEL_BTN_XX_MAX,
-			EV_SYS_02_BTN_CONF_IDLE,  EV_SYS_02_BTN_CONF_ACTIVE, put_event_task_set_up},
+	/*{ID_BTN_MEN,  BTN_MEN_PORT,  BTN_MEN_PIN,  BTN_MEN_PRESSED, DEL_BTN_XX_MAX,
+					EV_SYS_02_BTN_CONF_IDLE,  EV_SYS_02_BTN_CONF_ACTIVE, put_event_task_set_up},
+	*/
 	{ID_BTN_ENT,  BTN_ENT_PORT,  BTN_ENT_PIN,  BTN_ENT_PRESSED, DEL_BTN_XX_MAX,
 			EV_SYS_02_BTN_ENT_IDLE,  EV_SYS_02_BTN_ENT_ACTIVE,  put_event_task_set_up},
 	{ID_BTN_NEX,  BTN_NEX_PORT,  BTN_NEX_PIN,  BTN_NEX_PRESSED, DEL_BTN_XX_MAX,
@@ -72,6 +73,8 @@ const task_sensor_cfg_t task_sensor_cfg_list[] = {
 	{ID_BTN_ESC,  BTN_ESC_PORT,  BTN_ESC_PIN,  BTN_ESC_PRESSED, DEL_BTN_XX_MAX,
 			EV_SYS_02_BTN_ESC_IDLE,  EV_SYS_02_BTN_ESC_ACTIVE, put_event_task_set_up},
 	// System normal
+	{ID_BTN_MEN,  BTN_MEN_PORT,  BTN_MEN_PIN,  BTN_MEN_PRESSED, DEL_BTN_XX_MAX,
+	 EV_SYS_XX_IDLE,  EV_SYS_01_BTN_CONFIG_DOWN, put_event_task_normal},
 	{ID_BTN_INGRESO,  BTN_INGRESO_PORT,  BTN_INGRESO_PIN,  BTN_INGRESO_PRESSED, DEL_BTN_XX_MAX,
 		EV_SYS_XX_IDLE,  EV_SYS_01_BTN_INGRESO_DOWN, put_event_task_normal},
 	{ID_BTN_EGRESO,  BTN_EGRESO_PORT,  BTN_EGRESO_PIN,  BTN_EGRESO_PRESSED, DEL_BTN_XX_MAX,

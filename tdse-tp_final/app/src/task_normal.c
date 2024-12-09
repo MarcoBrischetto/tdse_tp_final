@@ -51,6 +51,9 @@
 #include "task_normal_interface.h"
 #include "task_actuator_attribute.h"
 #include "task_actuator_interface.h"
+#include "task_set_up_attribute.h"
+#include "task_set_up_interface.h"
+#include "configuracion.h"
 
 /********************** macros and definitions *******************************/
 #define G_TASK_SYS_CNT_INI			0ul
@@ -60,8 +63,8 @@
 #define DEL_SYS_XX_MED				50ul
 #define DEL_SYS_XX_MAX				500ul
 
-#define DEL_SYS_01_ESPERA			5000ul
-#define DEL_SYS_01_PERMANENCIA		10000ul
+//#define DEL_SYS_01_ESPERA			5000ul
+//#define DEL_SYS_01_PERMANENCIA		10000ul
 
 /********************** internal data declaration ****************************/
 task_normal_dta_t task_normal_dta =
@@ -119,6 +122,10 @@ void task_normal_update(void *parameters)
 	task_normal_dta_t *p_task_normal_dta;
 	bool b_time_update_required = false;
 
+	//tiempos de espera conversion de unidades
+	uint32_t del_tiempo_permanencia = configuracion.tiempo_permanencia*MILISEGUNDOS;
+	uint32_t del_tiempo_puerta = configuracion.tiempo_puerta*MILISEGUNDOS;
+
 	/* Update Task normal Counter */
 	g_task_normal_cnt++;
 
@@ -158,6 +165,14 @@ void task_normal_update(void *parameters)
 		switch (p_task_normal_dta->state)
 		{
 
+		case ST_SYS_01_DESACTIVADO:
+			if((true == p_task_normal_dta->flag) && (EV_SYS_01_CONFIG_FINALIZADA ==  p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				p_task_normal_dta->state = ST_SYS_01_ESPERAR_INGRESO;
+			}
+			break;
+
 		case ST_SYS_01_ESPERAR_INGRESO:
 
 			if((true == p_task_normal_dta->flag) && (EV_SYS_01_BTN_INGRESO_DOWN ==  p_task_normal_dta->event))
@@ -165,6 +180,12 @@ void task_normal_update(void *parameters)
 				p_task_normal_dta->flag = false;
 				put_event_task_actuator(EV_LED_XX_BLINK, ID_MOTOR_ABRIR);
 				p_task_normal_dta->state = ST_SYS_01_ABRIENDO_INGRESO;
+			}
+			else if((true == p_task_normal_dta->flag) && (EV_SYS_01_BTN_CONFIG_DOWN ==  p_task_normal_dta->event))
+			{
+				p_task_normal_dta->flag = false;
+				put_event_task_set_up(EV_SYS_02_BTN_CONF_ACTIVE); //Aviso a set up que entre en modo configuracion
+				p_task_normal_dta->state = ST_SYS_01_DESACTIVADO;
 			}
 
 			break;
@@ -175,7 +196,7 @@ void task_normal_update(void *parameters)
 			{
 				p_task_normal_dta->flag = false;
 
-				p_task_normal_dta->tick = DEL_SYS_01_ESPERA;
+				p_task_normal_dta->tick = del_tiempo_puerta;
 				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_ABRIR);
 				put_event_task_actuator(EV_LED_XX_ON, ID_SEMAFORO_INGRESO);
 
@@ -225,7 +246,7 @@ void task_normal_update(void *parameters)
 			if((true == p_task_normal_dta->flag) && (EV_SYS_01_PUERTA_INGRESO_CERRADA == p_task_normal_dta->event))
 			{
 				p_task_normal_dta->flag = false;
-				p_task_normal_dta->tick = DEL_SYS_01_PERMANENCIA;
+				p_task_normal_dta->tick = del_tiempo_permanencia;
 				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_CERRAR);
 				p_task_normal_dta->state = ST_SYS_01_PERSONA_ADENTRO;
 			}
@@ -265,7 +286,7 @@ void task_normal_update(void *parameters)
 			if((true == p_task_normal_dta->flag) && (EV_SYS_01_PUERTA_EGRESO_ABIERTA == p_task_normal_dta->event))
 			{
 				p_task_normal_dta->flag = false;
-				p_task_normal_dta->tick = DEL_SYS_01_ESPERA;
+				p_task_normal_dta->tick = del_tiempo_puerta;
 				put_event_task_actuator(EV_LED_XX_ON, ID_SEMAFORO_EGRESO);
 				put_event_task_actuator(EV_LED_XX_OFF, ID_MOTOR_ABRIR);
 				p_task_normal_dta->state = ST_SYS_01_ESPERANDO_EGRESO;

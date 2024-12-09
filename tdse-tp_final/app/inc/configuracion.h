@@ -2,6 +2,9 @@
 
 #include <stdint.h>
 
+#define MILISEGUNDOS 1e3
+
+//tiempo en segundos
 typedef struct{
 	uint8_t tiempo_puerta;
 	uint8_t tiempo_permanencia;

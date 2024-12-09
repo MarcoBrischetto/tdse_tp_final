@@ -64,6 +64,8 @@ extern "C" {
 /* Events to excite Task normal */
 typedef enum task_normal_ev {
 							EV_SYS_XX_IDLE,
+							EV_SYS_01_CONFIG_FINALIZADA,
+							EV_SYS_01_BTN_CONFIG_DOWN,
 							EV_SYS_01_BTN_INGRESO_DOWN,
 							EV_SYS_01_BTN_EGRESO_DOWN,
 							EV_SYS_01_PUERTA_EGRESO_ABIERTA,
@@ -78,6 +80,7 @@ typedef enum task_normal_ev {
 
 /* State of Task normal */
 typedef enum task_normal_st {
+							ST_SYS_01_DESACTIVADO,
 							ST_SYS_01_ESPERAR_INGRESO,
 							ST_SYS_01_ABRIENDO_INGRESO,
 							ST_SYS_01_ESPERANDO_INGRESO,

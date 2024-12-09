@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="PERMA"/>
+		<item key="selection" value="ESPERA"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="espera"/>
+			<item value="permanencia"/>
+			<item value="del_tiempo_permanencia"/>
+			<item value="CLEAN"/>
+			<item value="HAL_Delay"/>
+			<item value="calib"/>
+			<item value="HAL_ADCEx_Calibration_Start()"/>
+			<item value="cal"/>
+			<item value="calibrate"/>
 			<item value="PERMA"/>
 			<item value="PER"/>
 			<item value="EV_SYS_01_BARRERA_ACTIVA"/>
 			<item value="0"/>
 			<item value="sample"/>
 			<item value="hadc2"/>
-			<item value="channel"/>
-			<item value="read"/>
-			<item value="HAL_ADC_ConvCpltCallback"/>
-			<item value="if((true == p_task_normal_dta-&gt;flag) &amp;&amp; (EV_SYS_01_PUERTA_INGRESO_ABIERTA ==  p_task_normal_dta-&gt;event))"/>
-			<item value="g_task_set_up_tick_cnt"/>
-			<item value="b_time_update_required"/>
-			<item value="g_task_normal_tick_cnt"/>
-			<item value="g_task_normal_cnt"/>
-			<item value="get_event_task_menu"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -199,7 +199,7 @@ void displayCharPositionWrite( uint8_t charPositionX, uint8_t charPositionY )
                               DISPLAY_IR_SET_DDRAM_ADDR |
                               ( DISPLAY_20x4_LINE1_FIRST_CHARACTER_ADDRESS +
                                 charPositionX ) );
-            HAL_Delay(1);
+            //HAL_Delay(1);
         break;
 
         case 1:
@@ -207,7 +207,7 @@ void displayCharPositionWrite( uint8_t charPositionX, uint8_t charPositionY )
                               DISPLAY_IR_SET_DDRAM_ADDR |
                               ( DISPLAY_20x4_LINE2_FIRST_CHARACTER_ADDRESS +
                                 charPositionX ) );
-            HAL_Delay(1);
+            //HAL_Delay(1);
         break;
 
         case 2:
@@ -215,7 +215,7 @@ void displayCharPositionWrite( uint8_t charPositionX, uint8_t charPositionY )
                               DISPLAY_IR_SET_DDRAM_ADDR |
                               ( DISPLAY_20x4_LINE3_FIRST_CHARACTER_ADDRESS +
                                 charPositionX ) );
-            HAL_Delay(1);
+            //HAL_Delay(1);
         break;
 
         case 3:
@@ -223,7 +223,7 @@ void displayCharPositionWrite( uint8_t charPositionX, uint8_t charPositionY )
                               DISPLAY_IR_SET_DDRAM_ADDR |
                               ( DISPLAY_20x4_LINE4_FIRST_CHARACTER_ADDRESS +
                                 charPositionX ) );
-            HAL_Delay(1);
+            //HAL_Delay(1);
         break;
     }
 }

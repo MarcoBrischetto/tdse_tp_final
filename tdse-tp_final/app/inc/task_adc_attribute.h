@@ -83,12 +83,6 @@ typedef struct
 	bool				flag;
 } task_temperature_dta_t;
 
-/*Estructura de temperaturas*/
-
-typedef struct{
-	float ambiente;
-	float micro;
-}temperatura_t;
 
 /********************** external data declaration ****************************/
 extern task_temperature_dta_t task_temperature_dta;

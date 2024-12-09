@@ -1,0 +1,12 @@
+#ifndef CONFIGURACION_H
+
+#include <stdint.h>
+
+typedef struct{
+	uint8_t tiempo_puerta;
+	uint8_t tiempo_permanencia;
+}config_t;
+
+extern config_t configuracion;
+
+#endif //CONFIGURACION_H

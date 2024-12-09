@@ -69,7 +69,9 @@ typedef enum task_set_up_ev {EV_SYS_02_BTN_CONF_IDLE,
 						   EV_SYS_02_BTN_NXT_IDLE,
 						   EV_SYS_02_BTN_NXT_ACTIVE,
 						   EV_SYS_02_BTN_ESC_IDLE,
-						   EV_SYS_02_BTN_ESC_ACTIVE} task_set_up_ev_t;
+						   EV_SYS_02_BTN_ESC_ACTIVE,
+						   EV_SET_UP_02_NUEVA_TEMPERATURA
+} task_set_up_ev_t;
 
 /* State of Task Menu */
 typedef enum task_set_up_st {ST_MEN_XX_IDLE,
