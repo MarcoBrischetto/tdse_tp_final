@@ -1,0 +1,20 @@
+  task_normal.c (task_normal.h, task_normal_attribute.h) 
+   Non-Blocking Code -> System Modeling
+  
+  task_normal_interface.c (task_normal_interface.h)
+   Non-Blocking Code
+   
+   
+   Esta tarea se encarga del control de acceso a la esclusa y del monitoreo de los distintos sensores del mismo.
+   La tarea toma informacion de los sensores, la proceso y en base a ello, acciona los distintos actuadores disponibles a fin de 
+   obtener la funcionalidad deseada.
+   
+   Una descripcion resumida del funcionamiento se da a continuacion. El usuario presiona el boton para acceder a la exclusa haciendo
+   que la puerta se habra durante un tiempo configurado (la apertura y cierre estan gobernadas por un motor y un sensor).
+   La indicacion del acceso seguro se da con un semafoto indicativo. Si el usuario ingresa (detectado por la barrera infrarroja),
+   automaticamente la puerta de ingreso se cierra, caso contrario, se cerrara pasado el tiempo configurado.
+   Una vez dentro de la esclusa, el usuario podra presionar otro boton para salir de la misma. La dinamica de apertura y cierre 
+   con semaforo indicativo es la misma que para el caso anterior. En caso de que el usuario se quede dentro mas de un tiempo 
+   configurado, comenzara a sonar un buzzer indicando que la persona sobrepaso el tiempo establecido y hasta que no salga de la esclusa,
+   no dejara de sonar. Notamos que mientras una persona este dentro de la esclusa, ninguna otra podra ingresar, ademas, el sistema esta 
+   diseñado para que en ningun momento ambas puertas puedan estar abiertas.

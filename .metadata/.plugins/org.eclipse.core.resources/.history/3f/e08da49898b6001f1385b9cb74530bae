@@ -1,0 +1,10 @@
+  task_sensor.c (task_sensor.h, task_sensor_attribute.h) 
+   Non-Blocking & Update By Time Code -> Sensor Modeling
+   
+   Se encarga del encuestado de los distintos sensores del sistema, en este caso, pulsadores y dip switches.
+   Existe una instacia de la maquina para cada uno de los sensores del sistema, de esta manera, podemos procesarlos en forma
+   secuencial y con codigo comun a todos ellos.
+   
+   
+  
+...

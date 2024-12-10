@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;tdse-tp_final/app/task_menu.txt&apos; to &apos;task_set_up.txt&apos;" description="Rename resource &apos;task_menu.txt&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="app/task_menu.txt" name="task_set_up.txt" stamp="1733795414511" updateReferences="true"/>
+</session>

@@ -1,0 +1,25 @@
+task_actuator.c (task_actuator.h, task_actuator_attribute.h) 
+   Non-Blocking & Update By Time Code -> Actuator Modeling
+   
+task_actuator_interface.c (task_actuator_interface.h)
+   Non-Blocking Code interfaz para el paso de eventos
+   
+  
+Esta tarea se encarga de la excitacion de actuadores de distintas formas. El actuador esta modelado partiendo de un led.
+Existe una instancia de cada actuador que es procesada de forma secuencial por la maquina de estados. El cambio entre estados 
+se realiza a traves de la interfaz y las señales pueden provenir de los otros sistemas. Los modos de extacion del actuador son los
+siguientes:
+
+	Apagado: El actuador se encuentra desenergizado
+	Encendido: El actuador se encuentra energizado de forma constante.
+	Blink: El actuador pasa de estado energizado a desenegizado y viceversa cada un cierto tiempo fijo.
+	Pulse: El actuador se energiza durante un tiempo fijo y luego se desenergiza.
+
+Los actuadores del sistema se detallan a continuacion:
+
+	Motor abrir: Indica que el motor esta abriendo una puerta, cuando esta activado blinkea.
+	Motor cerrar: Indica que el motor esta cerrando una puerta, cuando esta activado blinkea.
+	Buzzer: Suena cuando se excede el tiempo dentro de la escluse, el mismo ulula mediante una exitacion de blink.
+	Semaforo ingreso: Se enciende cuando el acceso a la esclusa es seguro.
+	Semaforo egreso: Se enciende cuando la salida a la esclusa es segura.
+   

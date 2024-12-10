@@ -70,7 +70,7 @@
 
 /********************** internal data declaration ****************************/
 task_set_up_dta_t task_set_up_dta =
-	{DEL_MEN_XX_MIN, ST_SET_UP_02_MAIN, EV_SYS_02_BTN_CONF_IDLE, false, 1, 1, 1};
+	{DEL_MEN_XX_MIN, ST_SYS_02_MAIN, EV_SYS_02_BTN_CONF_IDLE, false, 1, 1, 1};
 
 #define SET_UP_DTA_QTY	(sizeof(task_set_up_dta)/sizeof(task_set_up_dta_t))
 
@@ -199,19 +199,7 @@ void task_set_up_update(void *parameters)
 		{
 			HAL_GPIO_TogglePin(LED_A_PORT, LED_A_PIN);
 
-			//snprintf(set_up_str, sizeof(set_up_str), "%lu", (g_task_set_up_cnt/1000ul));
-			//displayCharPositionWrite(10, 1);
-			//displayStringWrite(set_up_str);
-
 			p_task_set_up_dta->tick = DEL_MEN_XX_MAX;
-
-			/*
-			if (true == any_event_task_set_up())
-			{
-				p_task_set_up_dta->flag = true;
-				p_task_set_up_dta->event = get_event_task_set_up();
-			}
-			*/
 
 			if(true == any_event_task_set_up()){
 				p_task_set_up_dta->flag = true;
@@ -219,48 +207,48 @@ void task_set_up_update(void *parameters)
 
 				switch (p_task_set_up_dta->state)
 				{
-					case ST_SET_UP_02_UPDATE_TEMPERATURE:
+					case ST_SYS_02_UPDATE_TEMPERATURE:
 
 						if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_CONF_ACTIVE == p_task_set_up_dta->event))
 						{
 							linea1 = set_up_fijo;
 							linea2 = set_up1[p_task_set_up_dta->option - 1];
 							p_task_set_up_dta->flag = false;
-							p_task_set_up_dta->state = ST_SET_UP_02_MENU;
+							p_task_set_up_dta->state = ST_SYS_02_MENU;
 						}
 						else{
 							sprintf(aux2,"T1:%d  T2:%d", (int)temperatura.ambiente, (int)temperatura.micro);
 							p_task_set_up_dta->flag = false;
-							p_task_set_up_dta->state = ST_SET_UP_02_MAIN;
+							p_task_set_up_dta->state = ST_SYS_02_MAIN;
 						}
 						break;
 
-					case ST_SET_UP_02_MAIN:
+					case ST_SYS_02_MAIN:
 						if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_CONF_ACTIVE == p_task_set_up_dta->event))
 						{
 							linea1 = set_up_fijo;
 							linea2 = set_up1[p_task_set_up_dta->option - 1];
 							p_task_set_up_dta->flag = false;
-							p_task_set_up_dta->state = ST_SET_UP_02_MENU;
+							p_task_set_up_dta->state = ST_SYS_02_MENU;
 						}
 						else if((true == p_task_set_up_dta->flag) && (EV_SET_UP_02_NUEVA_TEMPERATURA == p_task_set_up_dta->event)){
 							p_task_set_up_dta->flag = false;
-							p_task_set_up_dta->state = ST_SET_UP_02_UPDATE_TEMPERATURE;
+							p_task_set_up_dta->state = ST_SYS_02_UPDATE_TEMPERATURE;
 						}
 
 
 						break;
 
-					case ST_SET_UP_02_MENU:
+					case ST_SYS_02_MENU:
 						if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ENT_ACTIVE == p_task_set_up_dta->event))
 						{
 							p_task_set_up_dta->flag = false;
 							if(p_task_set_up_dta->option == 1){
-								p_task_set_up_dta->state = ST_SET_UP_02_PUERTA;
+								p_task_set_up_dta->state = ST_SYS_02_PUERTA;
 								linea2 = set_up2[p_task_set_up_dta->opt_tiempo_puerta - 1];
 							}
 							else if(p_task_set_up_dta->option == 2){
-								p_task_set_up_dta->state = ST_SET_UP_02_PERMANENCIA;
+								p_task_set_up_dta->state = ST_SYS_02_PERMANENCIA;
 								linea2 = set_up3[p_task_set_up_dta->opt_tiempo_permanencia - 1];
 							}
 
@@ -273,7 +261,7 @@ void task_set_up_update(void *parameters)
 							linea2 = aux2;
 
 							put_event_task_normal(EV_SYS_01_CONFIG_FINALIZADA);
-							p_task_set_up_dta->state = ST_SET_UP_02_MAIN;
+							p_task_set_up_dta->state = ST_SYS_02_MAIN;
 
 						}
 						else if((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_NXT_ACTIVE == p_task_set_up_dta->event)){
@@ -284,7 +272,7 @@ void task_set_up_update(void *parameters)
 
 						break;
 
-					case ST_SET_UP_02_PUERTA:
+					case ST_SYS_02_PUERTA:
 
 						if((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ENT_ACTIVE == p_task_set_up_dta->event)){
 							//Agregar guardado
@@ -299,7 +287,7 @@ void task_set_up_update(void *parameters)
 						else if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ESC_ACTIVE == p_task_set_up_dta->event))
 						{
 							p_task_set_up_dta->flag = false;
-							p_task_set_up_dta->state = ST_SET_UP_02_MENU;
+							p_task_set_up_dta->state = ST_SYS_02_MENU;
 							linea1 = set_up_fijo;
 							linea2 = set_up1[p_task_set_up_dta->option - 1];
 
@@ -307,7 +295,7 @@ void task_set_up_update(void *parameters)
 
 						break;
 
-					case ST_SET_UP_02_PERMANENCIA:
+					case ST_SYS_02_PERMANENCIA:
 
 						if((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ENT_ACTIVE == p_task_set_up_dta->event)){
 							configuracion.tiempo_permanencia = atoi(string_tiempos_permanencia[p_task_set_up_dta->opt_tiempo_permanencia-1]);
@@ -321,7 +309,7 @@ void task_set_up_update(void *parameters)
 						else if ((true == p_task_set_up_dta->flag) && (EV_SYS_02_BTN_ESC_ACTIVE == p_task_set_up_dta->event))
 						{
 							p_task_set_up_dta->flag = false;
-							p_task_set_up_dta->state = ST_SET_UP_02_MENU;
+							p_task_set_up_dta->state = ST_SYS_02_MENU;
 							linea1 = set_up_fijo;
 							linea2 = set_up1[p_task_set_up_dta->option - 1];
 
@@ -332,12 +320,13 @@ void task_set_up_update(void *parameters)
 					default:
 
 						p_task_set_up_dta->tick  = DEL_MEN_XX_MIN;
-						p_task_set_up_dta->state = ST_MEN_XX_IDLE;
-						p_task_set_up_dta->event = ST_SET_UP_02_MAIN;
+						p_task_set_up_dta->state = ST_SYS_02_MAIN;
+						p_task_set_up_dta->event = EV_SYS_02_BTN_CONF_IDLE;
 						p_task_set_up_dta->flag  = false;
 
 						break;
 				}
+
 				displayCharPositionWrite(0, 0);
 				displayStringWrite("                ");
 				displayCharPositionWrite(0, 1);

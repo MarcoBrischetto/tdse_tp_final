@@ -1,0 +1,13 @@
+  task_set_up.c (task_set_up.h, task_set_up_attribute.h) 
+   Non-Blocking Code -> System Modeling
+  
+  task_set_up_interface.c (task_set_up_interface.h)
+   Non-Blocking Code
+   
+   
+  Esta tarea es la que hace de interfaz entre el usuario y la configuracion del sistema. Se encarga
+  tanto del control del display como del guardado de los distintos parametros de opracion del sistema.
+  
+  Los parametros son:
+  Tiempo de puerta: Es el tiempo maximo en el que las puertas pueden permanecer abiertas, pasado este tiempo se cierran.
+  Tiempo de permanencia: Es el tiempo maximo que una persona puede permanecer dentro de la esclusa.

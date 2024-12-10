@@ -1,0 +1,7 @@
+  task_temperature.c (task_temperature.h, task_adc_attribute.h) 
+   Non-Blocking Code -> System Modeling
+  
+  Esta tarea se encarga del encuestado del adc1 y adc2 para la obtencion de la temperatura ambiente (LM35) y la del microprocesador.
+  La tarea toma informacion de ambos sensores cada 20 segundos y envia una indicacion mediante interfaz a la tarea set_up para que 
+  actualice la informacion en el display. El tiempo elegido entre mediciones se eligio debido a que las variaciones en termperatura no
+  suelen ser drasticas. 

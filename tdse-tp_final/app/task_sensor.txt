@@ -1,4 +1,21 @@
   task_sensor.c (task_sensor.h, task_sensor_attribute.h) 
    Non-Blocking & Update By Time Code -> Sensor Modeling
+   
+   Se encarga del encuestado de los distintos sensores del sistema, en este caso, pulsadores y dip switches.
+   Existe una instacia de la maquina para cada uno de los sensores del sistema, de esta manera, podemos procesarlos en forma
+   secuencial y con codigo comun a todos ellos.
+   
+   Los sensores son:
+   
+   Boton ingreso: Permite la apertura de la puerta de ingreso a la esclusa.
+   Boton egreso: Permite la apertura de la puerta de egreso a la esclusa.
+   Sensor puerta ingreso: detecta si la puerta se encuentra abierta o cerrada.
+   Sensor puerto egreso: detecta si la puerta se encuentra abierta o cerrada.
+   Barrera infrarroja: detecta si una persona se encuentra dentro de la esclusa.
+   
+   Boton config: Pone el sistema en modo configuracion
+   Boton Enter: Permite guardar cambios y acceder a submenus
+   Boton Next: Permite cambiar entre opciones dentro de un menu.
+   Boton Esc: Permite regresar entre menus.
+   
   
-...

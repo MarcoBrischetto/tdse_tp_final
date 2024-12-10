@@ -1,10 +1,43 @@
-22:18:42 **** Incremental Build of configuration Debug for project tdse-tp_final ****
+22:14:29 **** Incremental Build of configuration Debug for project tdse-tp_final ****
 make -j2 all 
+arm-none-eabi-gcc "../app/src/task_set_up.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../app/inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_set_up.d" -MT"app/src/task_set_up.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_set_up.o"
+arm-none-eabi-gcc "../app/src/task_temperature.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../app/inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_temperature.d" -MT"app/src/task_temperature.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_temperature.o"
+../app/src/task_set_up.c: In function 'task_set_up_init':
+../app/src/task_set_up.c:110:14: warning: variable 'b_event' set but not used [-Wunused-but-set-variable]
+  110 |         bool b_event;
+      |              ^~~~~~~
+../app/src/task_set_up.c:109:33: warning: variable 'event' set but not used [-Wunused-but-set-variable]
+  109 |         task_set_up_ev_t        event;
+      |                                 ^~~~~
+../app/src/task_set_up.c:108:33: warning: variable 'state' set but not used [-Wunused-but-set-variable]
+  108 |         task_set_up_st_t        state;
+      |                                 ^~~~~
+../app/src/task_temperature.c: In function 'task_temperature_init':
+../app/src/task_temperature.c:97:14: warning: variable 'b_event' set but not used [-Wunused-but-set-variable]
+   97 |         bool b_event;
+      |              ^~~~~~~
+../app/src/task_temperature.c:96:33: warning: variable 'event' set but not used [-Wunused-but-set-variable]
+   96 |         task_temperature_ev_t   event;
+      |                                 ^~~~~
+../app/src/task_temperature.c:95:33: warning: variable 'state' set but not used [-Wunused-but-set-variable]
+   95 |         task_temperature_st_t   state;
+      |                                 ^~~~~
+../app/src/task_temperature.c: In function 'task_temperature_update':
+../app/src/task_temperature.c:134:13: warning: variable 'temp_aux' set but not used [-Wunused-but-set-variable]
+  134 |         int temp_aux;
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "tdse-tp_final.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\MBRIS\Desktop\Git\tdse_tp_final\tdse-tp_final\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tdse-tp_final.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.16.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: tdse-tp_final.elf has a LOAD segment with RWX permissions
+Finished building target: tdse-tp_final.elf
+ 
 arm-none-eabi-size  tdse-tp_final.elf 
+arm-none-eabi-objdump -h -S tdse-tp_final.elf  > "tdse-tp_final.list"
    text	   data	    bss	    dec	    hex	filename
-  25592	    760	   2544	  28896	   70e0	tdse-tp_final.elf
+  25584	    760	   2544	  28888	   70d8	tdse-tp_final.elf
 Finished building: default.size.stdout
  
+Finished building: tdse-tp_final.list
+ 
 
-22:18:43 Build Finished. 0 errors, 0 warnings. (took 603ms)
+22:14:41 Build Finished. 0 errors, 8 warnings. (took 12s.334ms)
 

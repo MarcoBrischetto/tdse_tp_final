@@ -74,13 +74,12 @@ typedef enum task_set_up_ev {EV_SYS_02_BTN_CONF_IDLE,
 } task_set_up_ev_t;
 
 /* State of Task Menu */
-typedef enum task_set_up_st {ST_MEN_XX_IDLE,
-						   ST_MEN_XX_ACTIVE,
-						   ST_SET_UP_02_UPDATE_TEMPERATURE,
-						   ST_SET_UP_02_MAIN,
-						   ST_SET_UP_02_MENU,
-						   ST_SET_UP_02_PUERTA,
-						   ST_SET_UP_02_PERMANENCIA,
+typedef enum task_set_up_st {
+						   ST_SYS_02_UPDATE_TEMPERATURE,
+						   ST_SYS_02_MAIN,
+						   ST_SYS_02_MENU,
+						   ST_SYS_02_PUERTA,
+						   ST_SYS_02_PERMANENCIA,
 							} task_set_up_st_t;
 
 typedef struct

@@ -1,0 +1,4 @@
+  task_temperature.c (task_temperature.h, task_adc_attribute.h) 
+   Non-Blocking Code -> System Modeling
+  
+  Esta tarea se encarga del encuestado del adc1 y adc2 para la obtencion de la temperatura ambiente (LM35) y la del microprocesador

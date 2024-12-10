@@ -131,7 +131,6 @@ void task_temperature_update(void *parameters)
 {
 	task_temperature_dta_t *p_task_temperature_dta;
 	bool b_time_update_required = false;
-	int temp_aux;
 
 	/* Update Task temperature Counter */
 	g_task_temperature_cnt++;
@@ -162,32 +161,6 @@ void task_temperature_update(void *parameters)
 
     	/* Update Task temperature Data Pointer */
 		p_task_temperature_dta = &task_temperature_dta;
-
-		/*
-		if(!flag_conversion1){
-			HAL_ADC_Start_IT(&hadc1);
-		}
-
-		if(flag_conversion1){
-			flag_conversion1 = false;
-			temperatura.micro = 25 + (1.43 - (3.30/4096.0)*(float)sample1)/(4.3e-3);
-			temp_aux = (int)temperatura.micro;
-			LOGGER_LOG("Grados micro = %d \n", temp_aux);
-			//LOGGER_LOG("conversion = %d \n", sample1);
-		}
-
-
-		if(!flag_conversion2){
-			HAL_ADC_Start_IT(&hadc2);
-		}
-
-		if(flag_conversion2){
-			flag_conversion2 = false;
-			temperatura.ambiente = (330.0/4096.0)*(float)sample2;
-			temp_aux = (int)temperatura.ambiente;
-			LOGGER_LOG("Grados ambiente = %d °C\n", temp_aux);
-		}
-		*/
 
 		switch (p_task_temperature_dta->state)
 		{

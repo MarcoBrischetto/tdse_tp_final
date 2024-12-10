@@ -1,4 +1,3 @@
   display.c (display.h)
-   Non-Blocking Code -> Display Code Library
-
-...
+	La biblioteca permite el control de un display LCD 
+	a traves de 2 modos, 8 y 4 bits.     
