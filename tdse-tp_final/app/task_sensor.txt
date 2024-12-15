@@ -22,5 +22,6 @@
    Se realizó una modificacion sobre la estructura de los sensores que indica la funcion que se debe utilizar como
    interfaz para enviar el evento registrado. De esta manera, podemos elegir a que maquina de estados del sistema le enviamos el 
    evento y que el mismo no se replique en todas.
-   
+   Otra modificacion fue agregar un flag en la estructura de configuracion que permite decidir cual de los dos eventos (Down, Up o Both)
+   se debe notificar a traves de la funcion anteriormente comentada.
   

@@ -63,28 +63,25 @@
 
 /********************** internal data declaration ****************************/
 const task_sensor_cfg_t task_sensor_cfg_list[] = {
-	/*{ID_BTN_MEN,  BTN_MEN_PORT,  BTN_MEN_PIN,  BTN_MEN_PRESSED, DEL_BTN_XX_MAX,
-					EV_SYS_02_BTN_CONF_IDLE,  EV_SYS_02_BTN_CONF_ACTIVE, put_event_task_set_up},
-	*/
 	{ID_BTN_ENT,  BTN_ENT_PORT,  BTN_ENT_PIN,  BTN_ENT_PRESSED, DEL_BTN_XX_MAX,
-			EV_SYS_02_BTN_ENT_IDLE,  EV_SYS_02_BTN_ENT_ACTIVE,  put_event_task_set_up},
+			EV_SYS_02_BTN_ENT_IDLE,  EV_SYS_02_BTN_ENT_ACTIVE,  put_event_task_set_up, DOWN_EVENT},
 	{ID_BTN_NEX,  BTN_NEX_PORT,  BTN_NEX_PIN,  BTN_NEX_PRESSED, DEL_BTN_XX_MAX,
-			EV_SYS_02_BTN_NXT_IDLE,  EV_SYS_02_BTN_NXT_ACTIVE, put_event_task_set_up},
+			EV_SYS_02_BTN_NXT_IDLE,  EV_SYS_02_BTN_NXT_ACTIVE, put_event_task_set_up, DOWN_EVENT},
 	{ID_BTN_ESC,  BTN_ESC_PORT,  BTN_ESC_PIN,  BTN_ESC_PRESSED, DEL_BTN_XX_MAX,
-			EV_SYS_02_BTN_ESC_IDLE,  EV_SYS_02_BTN_ESC_ACTIVE, put_event_task_set_up},
+			EV_SYS_02_BTN_ESC_IDLE,  EV_SYS_02_BTN_ESC_ACTIVE, put_event_task_set_up, DOWN_EVENT},
 	// System normal
-	{ID_BTN_MEN,  BTN_MEN_PORT,  BTN_MEN_PIN,  BTN_MEN_PRESSED, DEL_BTN_XX_MAX,
-	 EV_SYS_XX_IDLE,  EV_SYS_01_BTN_CONFIG_DOWN, put_event_task_normal},
+	{ID_BTN_CONFIG,  BTN_MEN_PORT,  BTN_MEN_PIN,  BTN_MEN_PRESSED, DEL_BTN_XX_MAX,
+	 EV_SYS_XX_IDLE,  EV_SYS_01_BTN_CONFIG_DOWN, put_event_task_normal, DOWN_EVENT},
 	{ID_BTN_INGRESO,  BTN_INGRESO_PORT,  BTN_INGRESO_PIN,  BTN_INGRESO_PRESSED, DEL_BTN_XX_MAX,
-		EV_SYS_XX_IDLE,  EV_SYS_01_BTN_INGRESO_DOWN, put_event_task_normal},
+		EV_SYS_XX_IDLE,  EV_SYS_01_BTN_INGRESO_DOWN, put_event_task_normal, BOTH_EVENTS},
 	{ID_BTN_EGRESO,  BTN_EGRESO_PORT,  BTN_EGRESO_PIN,  BTN_EGRESO_PRESSED, DEL_BTN_XX_MAX,
-		EV_SYS_XX_IDLE,  EV_SYS_01_BTN_EGRESO_DOWN, put_event_task_normal},
+		EV_SYS_XX_IDLE,  EV_SYS_01_BTN_EGRESO_DOWN, put_event_task_normal, BOTH_EVENTS},
 	{ID_SENSOR_PUERTA_INGRESO,  SENSOR_PUERTA_INGRESO_PORT, SENSOR_PUERTA_INGRESO_PIN,  SENSOR_PUERTA_INGRESO_PRESSED, DEL_BTN_XX_MAX,
-		EV_SYS_01_PUERTA_INGRESO_CERRADA,  EV_SYS_01_PUERTA_INGRESO_ABIERTA, put_event_task_normal},
+		EV_SYS_01_PUERTA_INGRESO_CERRADA,  EV_SYS_01_PUERTA_INGRESO_ABIERTA, put_event_task_normal, BOTH_EVENTS},
 	{ID_SENSOR_PUERTA_EGRESO,  SENSOR_PUERTA_EGRESO_PORT, SENSOR_PUERTA_EGRESO_PIN,  SENSOR_PUERTA_EGRESO_PRESSED, DEL_BTN_XX_MAX,
-		EV_SYS_01_PUERTA_EGRESO_CERRADA,  EV_SYS_01_PUERTA_EGRESO_ABIERTA, put_event_task_normal},
+		EV_SYS_01_PUERTA_EGRESO_CERRADA,  EV_SYS_01_PUERTA_EGRESO_ABIERTA, put_event_task_normal, BOTH_EVENTS},
 	{ID_BARRERA,  BARRERA_PORT, BARRERA_PIN,  BARRERA_PRESSED, DEL_BTN_XX_MAX,
-		EV_SYS_01_BARRERA_INACTIVA,  EV_SYS_01_BARRERA_ACTIVA, put_event_task_normal}
+		EV_SYS_01_BARRERA_INACTIVA,  EV_SYS_01_BARRERA_ACTIVA, put_event_task_normal, BOTH_EVENTS}
 };
 
 #define SENSOR_CFG_QTY	(sizeof(task_sensor_cfg_list)/sizeof(task_sensor_cfg_t))
@@ -215,9 +212,9 @@ void task_sensor_update(void *parameters)
 					{
 						if (EV_BTN_XX_DOWN == p_task_sensor_dta->event)
 						{
-							p_task_sensor_cfg->f_put_event(p_task_sensor_cfg->signal_down);
-							//put_event_task_set_up(p_task_sensor_cfg->signal_down);
-							//put_event_task_normal(p_task_sensor_cfg->signal_down);
+							if(p_task_sensor_cfg->type == DOWN_EVENT || p_task_sensor_cfg->type == BOTH_EVENTS){
+								p_task_sensor_cfg->f_put_event(p_task_sensor_cfg->signal_down);
+							}
 
 							p_task_sensor_dta->state = ST_BTN_XX_DOWN;
 						}
@@ -246,9 +243,10 @@ void task_sensor_update(void *parameters)
 					{
 						if (EV_BTN_XX_UP == p_task_sensor_dta->event)
 						{
-							//put_event_task_set_up(p_task_sensor_cfg->signal_up);
-							//put_event_task_normal(p_task_sensor_cfg->signal_up);
-							p_task_sensor_cfg->f_put_event(p_task_sensor_cfg->signal_up);
+							if(p_task_sensor_cfg->type == UP_EVENT || p_task_sensor_cfg->type == BOTH_EVENTS)
+							{
+								p_task_sensor_cfg->f_put_event(p_task_sensor_cfg->signal_up);
+							}
 							p_task_sensor_dta->state = ST_BTN_XX_UP;
 						}
 						else

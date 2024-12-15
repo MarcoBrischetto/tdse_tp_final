@@ -1,26 +1,42 @@
-22:39:17 **** Incremental Build of configuration Debug for project tdse-tp_final ****
+23:30:21 **** Incremental Build of configuration Debug for project tdse-tp_final ****
 make -j2 all 
-arm-none-eabi-gcc "../app/src/task_set_up.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../app/inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_set_up.d" -MT"app/src/task_set_up.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_set_up.o"
-../app/src/task_set_up.c: In function 'task_set_up_init':
-../app/src/task_set_up.c:138:33: warning: 's' directive writing 1 byte into a region of size between 0 and 4 [-Wformat-overflow=]
-  138 |     sprintf(aux1,"Config: %ds %ds", configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
-      |                                 ^
-../app/src/task_set_up.c:138:5: note: 'sprintf' output between 14 and 18 bytes into a destination of size 16
-  138 |     sprintf(aux1,"Config: %ds %ds", configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../app/src/task_set_up.c: In function 'task_set_up_update':
-../app/src/task_set_up.c:301:85: warning: 's' directive writing 1 byte into a region of size between 0 and 4 [-Wformat-overflow=]
-  301 |                                                         sprintf(aux1,"Config: %ds %ds",configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
-      |                                                                                     ^
-../app/src/task_set_up.c:301:57: note: 'sprintf' output between 14 and 18 bytes into a destination of size 16
-  301 |                                                         sprintf(aux1,"Config: %ds %ds",configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
-      |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../app/src/task_set_up.c:280:85: warning: 's' directive writing 1 byte into a region of size between 0 and 4 [-Wformat-overflow=]
-  280 |                                                         sprintf(aux1,"Config: %ds %ds",configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
-      |                                                                                     ^
-../app/src/task_set_up.c:280:57: note: 'sprintf' output between 14 and 18 bytes into a destination of size 16
-  280 |                                                         sprintf(aux1,"Config: %ds %ds",configuracion.tiempo_puerta, configuracion.tiempo_permanencia);
-      |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc "../app/src/task_sensor.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../app/inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_sensor.d" -MT"app/src/task_sensor.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_sensor.o"
+../app/src/task_sensor.c:67:77: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_set_up_ev_t)' {aka 'void (*)(enum task_set_up_ev)'} [-Wincompatible-pointer-types]
+   67 |                         EV_SYS_02_BTN_ENT_IDLE,  EV_SYS_02_BTN_ENT_ACTIVE,  put_event_task_set_up, DOWN_EVENT},
+      |                                                                             ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:67:77: note: (near initialization for 'task_sensor_cfg_list[0].f_put_event')
+../app/src/task_sensor.c:69:76: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_set_up_ev_t)' {aka 'void (*)(enum task_set_up_ev)'} [-Wincompatible-pointer-types]
+   69 |                         EV_SYS_02_BTN_NXT_IDLE,  EV_SYS_02_BTN_NXT_ACTIVE, put_event_task_set_up, DOWN_EVENT},
+      |                                                                            ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:69:76: note: (near initialization for 'task_sensor_cfg_list[1].f_put_event')
+../app/src/task_sensor.c:71:76: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_set_up_ev_t)' {aka 'void (*)(enum task_set_up_ev)'} [-Wincompatible-pointer-types]
+   71 |                         EV_SYS_02_BTN_ESC_IDLE,  EV_SYS_02_BTN_ESC_ACTIVE, put_event_task_set_up, DOWN_EVENT},
+      |                                                                            ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:71:76: note: (near initialization for 'task_sensor_cfg_list[2].f_put_event')
+../app/src/task_sensor.c:74:54: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_normal_ev_t)' {aka 'void (*)(enum task_normal_ev)'} [-Wincompatible-pointer-types]
+   74 |          EV_SYS_XX_IDLE,  EV_SYS_01_BTN_CONFIG_DOWN, put_event_task_normal, DOWN_EVENT},
+      |                                                      ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:74:54: note: (near initialization for 'task_sensor_cfg_list[3].f_put_event')
+../app/src/task_sensor.c:76:62: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_normal_ev_t)' {aka 'void (*)(enum task_normal_ev)'} [-Wincompatible-pointer-types]
+   76 |                 EV_SYS_XX_IDLE,  EV_SYS_01_BTN_INGRESO_DOWN, put_event_task_normal, BOTH_EVENTS},
+      |                                                              ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:76:62: note: (near initialization for 'task_sensor_cfg_list[4].f_put_event')
+../app/src/task_sensor.c:78:61: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_normal_ev_t)' {aka 'void (*)(enum task_normal_ev)'} [-Wincompatible-pointer-types]
+   78 |                 EV_SYS_XX_IDLE,  EV_SYS_01_BTN_EGRESO_DOWN, put_event_task_normal, BOTH_EVENTS},
+      |                                                             ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:78:61: note: (near initialization for 'task_sensor_cfg_list[5].f_put_event')
+../app/src/task_sensor.c:80:86: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_normal_ev_t)' {aka 'void (*)(enum task_normal_ev)'} [-Wincompatible-pointer-types]
+   80 |                 EV_SYS_01_PUERTA_INGRESO_CERRADA,  EV_SYS_01_PUERTA_INGRESO_ABIERTA, put_event_task_normal, BOTH_EVENTS},
+      |                                                                                      ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:80:86: note: (near initialization for 'task_sensor_cfg_list[6].f_put_event')
+../app/src/task_sensor.c:82:84: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_normal_ev_t)' {aka 'void (*)(enum task_normal_ev)'} [-Wincompatible-pointer-types]
+   82 |                 EV_SYS_01_PUERTA_EGRESO_CERRADA,  EV_SYS_01_PUERTA_EGRESO_ABIERTA, put_event_task_normal, BOTH_EVENTS},
+      |                                                                                    ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:82:84: note: (near initialization for 'task_sensor_cfg_list[7].f_put_event')
+../app/src/task_sensor.c:84:72: warning: initialization of 'void (*)(uint32_t)' {aka 'void (*)(long unsigned int)'} from incompatible pointer type 'void (*)(task_normal_ev_t)' {aka 'void (*)(enum task_normal_ev)'} [-Wincompatible-pointer-types]
+   84 |                 EV_SYS_01_BARRERA_INACTIVA,  EV_SYS_01_BARRERA_ACTIVA, put_event_task_normal, BOTH_EVENTS}
+      |                                                                        ^~~~~~~~~~~~~~~~~~~~~
+../app/src/task_sensor.c:84:72: note: (near initialization for 'task_sensor_cfg_list[8].f_put_event')
 arm-none-eabi-gcc -o "tdse-tp_final.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\MBRIS\Desktop\Git\tdse_tp_final\tdse-tp_final\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tdse-tp_final.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 C:/ST/STM32CubeIDE_1.16.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: tdse-tp_final.elf has a LOAD segment with RWX permissions
 Finished building target: tdse-tp_final.elf
@@ -28,15 +44,15 @@ Finished building target: tdse-tp_final.elf
 arm-none-eabi-size  tdse-tp_final.elf 
 arm-none-eabi-objdump -h -S tdse-tp_final.elf  > "tdse-tp_final.list"
    text	   data	    bss	    dec	    hex	filename
-  30372	    808	   2616	  33796	   8404	tdse-tp_final.elf
+  30480	    824	   2616	  33920	   8480	tdse-tp_final.elf
 Finished building: default.size.stdout
  
 Finished building: tdse-tp_final.list
  
-22:39:42 **** Incremental Build of configuration Debug for project tdse-tp_final ****
+23:31:17 **** Incremental Build of configuration Debug for project tdse-tp_final ****
 make -j2 all 
 arm-none-eabi-size  tdse-tp_final.elf 
    text	   data	    bss	    dec	    hex	filename
-  30372	    808	   2616	  33796	   8404	tdse-tp_final.elf
+  30480	    824	   2616	  33920	   8480	tdse-tp_final.elf
 Finished building: default.size.stdout
  

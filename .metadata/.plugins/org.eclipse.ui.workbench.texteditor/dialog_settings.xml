@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="%ds"/>
+		<item key="selection" value="ID_BTN_CONFIG"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="ID_BTN_M"/>
+			<item value="ID_BTN_MEN"/>
+			<item value="ID_BTN_CONFIG"/>
+			<item value="type"/>
 			<item value="%ds"/>
 			<item value="&#x09;if(cpu_utilization &gt; worst_cpu_utilization){"/>
 			<item value="g_app_cnt"/>

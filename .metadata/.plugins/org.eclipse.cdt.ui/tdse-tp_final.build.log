@@ -1,10 +1,10 @@
-22:39:42 **** Incremental Build of configuration Debug for project tdse-tp_final ****
+23:31:17 **** Incremental Build of configuration Debug for project tdse-tp_final ****
 make -j2 all 
 arm-none-eabi-size  tdse-tp_final.elf 
    text	   data	    bss	    dec	    hex	filename
-  30372	    808	   2616	  33796	   8404	tdse-tp_final.elf
+  30480	    824	   2616	  33920	   8480	tdse-tp_final.elf
 Finished building: default.size.stdout
  
 
-22:39:43 Build Finished. 0 errors, 0 warnings. (took 550ms)
+23:31:17 Build Finished. 0 errors, 0 warnings. (took 616ms)
 

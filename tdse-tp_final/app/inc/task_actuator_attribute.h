@@ -120,8 +120,10 @@ typedef enum task_actuator_st {ST_LED_XX_OFF,
 
 /* Identifier of Task Actuator */
 typedef enum task_actuator_id {ID_LED_A,
-							   ID_MOTOR_ABRIR,
-							   ID_MOTOR_CERRAR,
+							   ID_MOTOR_INGRESO_ABRIR,
+							   ID_MOTOR_INGRESO_CERRAR,
+							   ID_MOTOR_EGRESO_ABRIR,
+							   ID_MOTOR_EGRESO_CERRAR,
 							   ID_SEMAFORO_INGRESO,
 							   ID_SEMAFORO_EGRESO,
 							   ID_BUZZER
