@@ -131,6 +131,7 @@ void task_temperature_update(void *parameters)
 {
 	task_temperature_dta_t *p_task_temperature_dta;
 	bool b_time_update_required = false;
+	int temp_aux = 0;
 
 	/* Update Task temperature Counter */
 	g_task_temperature_cnt++;
@@ -178,12 +179,12 @@ void task_temperature_update(void *parameters)
 					flag_conversion1 = false;
 					temperatura.micro = 25 + (V25 - (ADC_REF/ADC_RESOLUTION)*(float)sample1)/(PENDIENTE);
 					temp_aux = (int)temperatura.micro;
-					LOGGER_LOG("Grados micro = %d °C\n", temp_aux);
+					//LOGGER_LOG("Grados micro = %d °C\n", temp_aux);
 
 					flag_conversion2 = false;
 					temperatura.ambiente = (100.0*ADC_REF/ADC_RESOLUTION)*(float)sample2;
 					temp_aux = (int)temperatura.ambiente;
-					LOGGER_LOG("Grados ambiente = %d °C\n", temp_aux);
+					//LOGGER_LOG("Grados ambiente = %d °C\n", temp_aux);
 
 					put_event_task_set_up(EV_SET_UP_02_NUEVA_TEMPERATURA);
 

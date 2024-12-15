@@ -4,6 +4,12 @@
 
   (paper "A4")
 
+  (title_block
+    (title "TdSE: TP Final Puerta Esclusa")
+    (date "2024-12-11")
+    (company "FIUBA")
+  )
+
   (lib_symbols
     (symbol "Device:LED" (pin_numbers hide) (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
       (property "Reference" "D" (at 0 2.54 0)
@@ -3292,8 +3298,8 @@
     (property "Datasheet" "" (at 175.26 144.78 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "" (uuid 9ed8d87a-02c7-4aca-9b59-b5c27addc001))
-    (pin "" (uuid 4b7e9cc0-fe62-4c16-8468-b8cfbe257ea5))
+    (pin "" (uuid b796938c-3f0a-4396-8ff6-19142fba2fd5))
+    (pin "" (uuid b796938c-3f0a-4396-8ff6-19142fba2fd5))
     (pin "" (uuid b796938c-3f0a-4396-8ff6-19142fba2fd5))
     (instances
       (project "tp_final_circuito"

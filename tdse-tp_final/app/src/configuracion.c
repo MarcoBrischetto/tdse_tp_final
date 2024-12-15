@@ -1,3 +1,3 @@
 #include "configuracion.h"
 
-config_t configuracion = {3,10};
+config_t configuracion = {5, 20};

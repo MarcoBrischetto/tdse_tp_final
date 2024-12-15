@@ -18,4 +18,9 @@
    Boton Next: Permite cambiar entre opciones dentro de un menu.
    Boton Esc: Permite regresar entre menus.
    
+   
+   Se realizó una modificacion sobre la estructura de los sensores que indica la funcion que se debe utilizar como
+   interfaz para enviar el evento registrado. De esta manera, podemos elegir a que maquina de estados del sistema le enviamos el 
+   evento y que el mismo no se replique en todas.
+   
   

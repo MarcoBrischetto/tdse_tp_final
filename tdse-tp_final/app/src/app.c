@@ -126,6 +126,7 @@ void app_init(void)
 	}
 
 	cycle_counter_init();
+	cycle_counter_reset();
 }
 
 void app_update(void)
@@ -133,6 +134,12 @@ void app_update(void)
 	uint32_t index;
 	uint32_t cycle_counter;
 	uint32_t cycle_counter_time_us;
+	uint32_t idle_time_us = 0;
+
+	static float worst_cpu_utilization = 0;
+	float cpu_utilization = 0;
+
+	idle_time_us = cycle_counter_time_us();
 
 	/* Check if it's time to run tasks */
 	if (G_APP_TICK_CNT_INI < g_app_tick_cnt)
@@ -146,7 +153,6 @@ void app_update(void)
     	/* Go through the task arrays */
     	for (index = 0; TASK_QTY > index; index++)
     	{
-			//HAL_GPIO_TogglePin(LED_A_PORT, LED_A_PIN);
 			cycle_counter_reset();
 
     		/* Run task_x_update */
@@ -154,7 +160,6 @@ void app_update(void)
 
 			cycle_counter = cycle_counter_get();
 			cycle_counter_time_us = cycle_counter_time_us();
-			//HAL_GPIO_TogglePin(LED_A_PORT, LED_A_PIN);
 
 			/* Update variables */
 	    	g_app_time_us += cycle_counter_time_us;
@@ -168,6 +173,10 @@ void app_update(void)
 				task_dta_list[index].BCET = cycle_counter_time_us;
 			}
 	    }
+
+    	cpu_utilization = 100.0*(float)g_app_time_us/((float)idle_time_us + (float)g_app_time_us);
+    	idle_time_us = 0;
+    	cycle_counter_reset();
     }
 }
 
@@ -180,7 +189,6 @@ void HAL_SYSTICK_Callback(void)
 	g_task_normal_tick_cnt++;
 	g_task_actuator_tick_cnt++;
 	g_task_temperature_tick_cnt++;
-
 
 	//HAL_GPIO_TogglePin(LED_A_PORT, LED_A_PIN);
 }
