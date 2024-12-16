@@ -45,5 +45,5 @@
 	
 	ST_SYS_01_CERRANDO_EGRESO_TIEMPO: Comienza el cierre de la puerta de egreso porque se agoto el tiempo de apertura maximo.
 	
-	ST_SYS_01_CERRANDO_EGRESO_PERSONA: Comienza el cierre de la puerta de egreso porque el usuario salio de la esclusa.
+	ST_SYS_01_CERRANDO_EGRESO_PERSONA: Comienza el cierre de la puerta de egreso porque el usuario salio de la esclusa
 	

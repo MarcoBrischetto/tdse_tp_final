@@ -22,28 +22,4 @@
    Los estados del sistema son:
    
    
-	ST_SYS_01_DESACTIVADO: El control de la esclusa se encuentra desactivado debido a que se esta configurando el sistema desde
-	la maquina de estados Set Up.
-	
-	ST_SYS_01_ESPERAR_INGRESO: Espera a que un usuario presione el boton para ingresar a la esclusa.
-	
-	ST_SYS_01_ABRIENDO_INGRESO: La puerta de ingreso esta abriendose.
-	
-	ST_SYS_01_ESPERANDO_INGRESO: Con la puerta abierta, se espera el ingreso del usuario a la esclusa.
-	
-	ST_SYS_01_CERRANDO_INGRESO_TIEMPO: Comienza el cierre de la puerta porque se agoto el tiempo de apertura maximo.
-	
-	ST_SYS_01_CERRANDO_INGRESO_PERSONA: Comienza el cierre de la puerta porque el usuario ingreso a la esclusa.
-	
-	ST_SYS_01_PERSONA_ADENTRO: La persona se encuentra dentro de la esclusa.
-	
-	ST_SYS_01_TIEMPO_EXCEDIDO: La persona sigue todavia en la esclusa y ha expirado el tiempo maximo de permanencia.
-	
-	ST_SYS_01_ABRIENDO_EGRESO: La puerta de egreso se esta abriendo
-	
-	ST_SYS_01_ESPERANDO_EGRESO: Con la puerta abierta, se espera el egreso del usuario.
-	
-	ST_SYS_01_CERRANDO_EGRESO_TIEMPO: Comienza el cierre de la puerta de egreso porque se agoto el tiempo de apertura maximo.
-	
-	ST_SYS_01_CERRANDO_EGRESO_PERSONA: Comienza el cierre de la puerta de egreso porque el usuario salio de la esclusa.
-	
+   
